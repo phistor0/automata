@@ -7,6 +7,7 @@
     }],  
     "buildPresets": [{
         "name": "default",
-        "configurePreset": "default"
+        "configurePreset": "default",
+        "jobs": 4
     }]
 }
