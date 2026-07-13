@@ -13,7 +13,7 @@ double triangleArea() {
 
     a = (b * h)/2;
     return a;
-}
+};
 
 int main() {
     double area;
@@ -21,4 +21,4 @@ int main() {
     cout << "The area is: " << area;
     
     return 0;
-}
+};
