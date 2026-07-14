@@ -18,7 +18,7 @@ int main(int, char**) {
     SDL_Event Event;
     while (isRunning) {
         while(SDL_PollEvent(&Event)) {
-            if(Event.type = SDL_EVENT_QUIT) {
+            if(Event.type == SDL_EVENT_QUIT) {
                 isRunning = false;
             }
         }

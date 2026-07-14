@@ -23,18 +23,18 @@ set(
     "${CMAKE_BINARY_DIR}/$<CONFIGURATION>"
 )
 
-add_executable(MyGame
+add_executable(Automata
   src/main.cpp
 )
 
 if(APPLE)
-  set_target_properties(MyGame PROPERTIES
+  set_target_properties(Automata PROPERTIES
     INSTALL_RPATH "@executable_path;@loader_path"
     BUILD_WITH_INSTALL_RPATH TRUE
     MACOSX_RPATH TRUE
   )
 elseif(UNIX)
-  set_target_properties(MyGame PROPERTIES
+  set_target_properties(Automata PROPERTIES
     INSTALL_RPATH "$ORIGIN"
     BUILD_WITH_INSTALL_RPATH TRUE
   )
@@ -46,7 +46,7 @@ add_subdirectory(${VENDOR_DIR}/SDL)
 add_subdirectory(${VENDOR_DIR}/SDL_image)
 add_subdirectory(${VENDOR_DIR}/SDL_ttf)
 
-target_link_libraries(MyGame
+target_link_libraries(Automata
   SDL3::SDL3
   SDL3_image::SDL3_image
   SDL3_ttf::SDL3_ttf
