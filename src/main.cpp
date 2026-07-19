@@ -1,27 +1,22 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <SDL3/SDL_keyboard.h>
-#include "window.hpp"
-#include "sdl_errorhandler.hpp"
 // #include <SDL3_image/SDL_image.h>
 // #include <SDL3_ttf/SDL_ttf.h>
 
-#include "window.hpp";
+#include "window.hpp"
+#include "sdl_errorhandler.hpp"
+#include "sdl_eventhandler.hpp"
 
 using namespace std;
 
-
-void HandleEvent(SDL_Event& E) {
-    if (E.type == SDL_EVENT_KEY_DOWN) {
-        cout << "Keydown." << "\n";
-    }
-}
 
 int main(int, char**) {
     // Initialization
     
     SDL_Init(SDL_INIT_VIDEO); // Initialize SDLVideo
     Window GameWindow; // Create the window using the custom Window class
+    SDL_EventHandler EventHandler;
 
     // Application Loop
     SDL_Event Event;
@@ -33,7 +28,7 @@ int main(int, char**) {
                 isRunning = false;
             }
 
-            HandleEvent(Event);
+            EventHandler.HandleEvent(Event);
         }
 
         // Update objects

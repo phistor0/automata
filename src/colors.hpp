@@ -18,9 +18,9 @@ Uint32 GetColor(int colorValue, const SDL_PixelFormatDetails* formatDetails) {
         Uint32 gridColor {SDL_MapRGB(
             formatDetails,
             nullptr,
-            180,
-            180,
-            180
+            67,
+            67,
+            92
         )};
 
         return gridColor;
