@@ -15,7 +15,7 @@ int main(int, char**) {
     // Initialization
     
     SDL_Init(SDL_INIT_VIDEO); // Initialize SDLVideo
-    Window GameWindow; // Create the window using the custom Window class
+    Window ApplicationWindow; // Create the window using the custom Window class
     SDL_EventHandler EventHandler;
 
     // Application Loop
@@ -33,7 +33,7 @@ int main(int, char**) {
 
         // Update objects
 
-        // Render Changes
+        ApplicationWindow.RenderWindow();
     }
 
 

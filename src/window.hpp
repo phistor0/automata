@@ -16,21 +16,13 @@ public:
 
         SDLWindow = SDL_CreateWindow(
             "Automata", 800, 300, Flags
-        ); // Create the window
-
-        // Creates the format details for when we draw on the surface
-        const SDL_PixelFormatDetails* PixelFmtDetails{
-            SDL_GetPixelFormatDetails(GetSurface()->format)
-        };
-
-        SDL_FillSurfaceRect(
-            GetSurface(),
-            nullptr,
-            GetColor(0, PixelFmtDetails)
-        );
-
-        SDL_UpdateWindowSurface(SDLWindow);
+        ); // Create the window       
     }
+
+    // Creates the format details for when we draw on the surface
+    const SDL_PixelFormatDetails* PixelFmtDetails{
+        SDL_GetPixelFormatDetails(GetSurface()->format)
+    }; 
 
     // Simple function to get the window surface
     SDL_Surface* GetSurface() const {
@@ -39,6 +31,18 @@ public:
 
     Window(const Window&) = delete;
     Window& operator=(const Window&) = delete;
+
+    void Render() {
+        SDL_FillSurfaceRect(
+            GetSurface(),
+            nullptr,
+            GetColor(0, PixelFmtDetails)
+        );
+    }
+
+    void Update() {
+        SDL_UpdateWindowSurface(SDLWindow);
+    }
 
     // Window destructor
     ~Window() {
