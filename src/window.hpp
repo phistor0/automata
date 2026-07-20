@@ -57,7 +57,7 @@ public:
         }
 
         for (int y = 0; y < (grid.WidthX + 1); y++) {
-            const SDL_Rect line{windowBuffer + (squareSize * y), windowBuffer, lineSize, grid.WidthX * squareSize};
+            const SDL_Rect line{windowBuffer + (squareSize * y), windowBuffer, lineSize, grid.WidthY * squareSize};
             SDL_FillSurfaceRect(GetSurface(), &line, GetColor(1, PixelFmtDetails));
         }
 

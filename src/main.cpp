@@ -17,7 +17,7 @@ int main(int, char**) {
     SDL_Init(SDL_INIT_VIDEO); // Initialize SDLVideo
     Window ApplicationWindow; // Create the window using the custom Window class
     SDL_EventHandler EventHandler;
-    GridArray Grid{12, 12};
+    GridArray Grid{24, 14};
 
     // Application Loop
     SDL_Event Event;
