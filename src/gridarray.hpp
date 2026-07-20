@@ -28,6 +28,8 @@ public:
 
     void GridModify(int rowY, int columnX, int value) {
         arrayIndex[rowY][columnX] = value;
+
+        cout << "grid has been modified";
     }
 
     int RetrieveValue(int rowY, int columnX) {

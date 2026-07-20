@@ -23,14 +23,20 @@ public:
         return KEYS[key];
     }
 
-    void HandleEvent(SDL_Event& E) {
-        if (E.type == SDL_EVENT_KEY_DOWN) {
-            cout << "Keydown." << E.key.key << "\n";
-            KeyIn(E.key.key, true);
-        }
-        if (E.type == SDL_EVENT_KEY_UP) {
-            cout << "Keydown." << E.key.key << "\n";
-            KeyIn(E.key.key, false);
+    void HandleEvent(SDL_Event& E, int windowBuffer, int squareSize, int lineSize, int gridWidthX, int gridWidthY) {
+        if (E.type == SDL_EVENT_MOUSE_BUTTON_UP && E.button.button == SDL_BUTTON_LEFT) {
+            int mouseX = E.button.x;
+            int mouseY = E.button.y;
+
+            if (mouseX > windowBuffer && 
+                mouseY > windowBuffer && 
+                mouseX < ((gridWidthX * squareSize) + (gridWidthX * lineSize) - windowBuffer) &&
+                mouseY < ((gridWidthY * squareSize) + (gridWidthX * lineSize) - windowBuffer)
+            ) {
+                // int gridSquareX = (mouseX - windowBuffer)/(squareSize + lineSize);
+
+                cout << mouseX << ", " << mouseY << "\n";
+            }
         }
     }
 };

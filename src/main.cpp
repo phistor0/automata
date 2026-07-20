@@ -15,7 +15,7 @@ int main(int, char**) {
     // Initialization
     
     SDL_Init(SDL_INIT_VIDEO); // Initialize SDLVideo
-    Window ApplicationWindow; // Create the window using the custom Window class
+    Window Win; // Create the window using the custom Window class
     SDL_EventHandler EventHandler;
     GridArray Grid{24, 14};
 
@@ -29,19 +29,19 @@ int main(int, char**) {
                 isRunning = false;
             }
 
-            EventHandler.HandleEvent(Event);
+            EventHandler.HandleEvent(Event, Win.windowBuffer, Win.squareSize, Win.lineSize, Grid.WidthX, Grid.WidthY);
         }
 
         // Update objects
 
         // Removes existing data on the back buffer by painting it backgroundcolor
-        ApplicationWindow.BufferClear(); 
+        Win.BufferClear(); 
 
         // Draws objects onto the back buffer
-        ApplicationWindow.Render(Grid);
+        Win.Render(Grid);
 
         // Updates the back buffer onto the screen
-        ApplicationWindow.Update();
+        Win.Update();
     }
 
 

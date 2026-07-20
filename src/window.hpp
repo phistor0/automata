@@ -51,6 +51,9 @@ public:
             SDL_GetPixelFormatDetails(GetSurface()->format)
         };
 
+        const SDL_Rect background{windowBuffer, windowBuffer, squareSize * grid.WidthX, squareSize * grid.WidthY};
+        SDL_FillSurfaceRect(GetSurface(), &background, GetColor(2, PixelFmtDetails));  
+
         for (int x = 0; x < (grid.WidthY + 1); x++) {
             const SDL_Rect line{windowBuffer, windowBuffer + (squareSize * x), grid.WidthX * squareSize, lineSize};
             SDL_FillSurfaceRect(GetSurface(), &line, GetColor(1, PixelFmtDetails));
