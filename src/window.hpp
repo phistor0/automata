@@ -17,12 +17,7 @@ public:
         SDLWindow = SDL_CreateWindow(
             "Automata", 800, 300, Flags
         ); // Create the window       
-    }
-
-    // Creates the format details for when we draw on the surface
-    const SDL_PixelFormatDetails* PixelFmtDetails{
-        SDL_GetPixelFormatDetails(GetSurface()->format)
-    }; 
+    } 
 
     // Simple function to get the window surface
     SDL_Surface* GetSurface() const {
@@ -32,7 +27,12 @@ public:
     Window(const Window&) = delete;
     Window& operator=(const Window&) = delete;
 
-    void Render() {
+    // Removes existing data on the back buffer by painting it backgroundcolor
+    void BufferClear() {
+        const SDL_PixelFormatDetails* PixelFmtDetails{
+            SDL_GetPixelFormatDetails(GetSurface()->format)
+        };
+
         SDL_FillSurfaceRect(
             GetSurface(),
             nullptr,
@@ -40,6 +40,14 @@ public:
         );
     }
 
+    // Draws objects onto the back buffer
+    void Render() {
+        const SDL_PixelFormatDetails* PixelFmtDetails{
+            SDL_GetPixelFormatDetails(GetSurface()->format)
+        };
+    }
+
+    // Updates the back buffer onto the screen
     void Update() {
         SDL_UpdateWindowSurface(SDLWindow);
     }

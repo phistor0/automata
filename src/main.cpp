@@ -33,7 +33,14 @@ int main(int, char**) {
 
         // Update objects
 
-        ApplicationWindow.RenderWindow();
+        // Removes existing data on the back buffer by painting it backgroundcolor
+        ApplicationWindow.BufferClear(); 
+
+        // Draws objects onto the back buffer
+        ApplicationWindow.Render();
+
+        // Updates the back buffer onto the screen
+        ApplicationWindow.Update();
     }
 
 
