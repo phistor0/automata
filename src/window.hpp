@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
 #include <iostream>
+#include <vector>
 #include "colors.hpp"
 #include "sdl_errorhandler.hpp"
 #include "gridarray.hpp"
@@ -46,26 +47,39 @@ public:
     }
 
     // Draws objects onto the back buffer
-    void Render(GridArray grid) {
+    void Render(GridArray* grid) {
         const SDL_PixelFormatDetails* PixelFmtDetails{
             SDL_GetPixelFormatDetails(GetSurface()->format)
         };
 
-        const SDL_Rect background{windowBuffer, windowBuffer, squareSize * grid.WidthX, squareSize * grid.WidthY};
+        const SDL_Rect background{windowBuffer, windowBuffer, squareSize * grid->WidthX, squareSize * grid->WidthY};
         SDL_FillSurfaceRect(GetSurface(), &background, GetColor(2, PixelFmtDetails));  
 
-        for (int x = 0; x < (grid.WidthY + 1); x++) {
-            const SDL_Rect line{windowBuffer, windowBuffer + (squareSize * x), grid.WidthX * squareSize, lineSize};
+        for (int y = 0; y < (grid->WidthY); y++) {
+            vector<int> row;
+            row = grid->arrayIndex[y];
+            for (int x = 0; x < (grid->WidthX); x++) {
+                if (row[x] == 2) {
+                    const SDL_Rect cell{windowBuffer + (x * squareSize), windowBuffer + (y * squareSize), squareSize, squareSize};
+                    SDL_FillSurfaceRect(GetSurface(), &cell, GetColor(3, PixelFmtDetails));
+                }
+            }
+        }
+
+        for (int x = 0; x < (grid->WidthY + 1); x++) {
+            const SDL_Rect line{windowBuffer, windowBuffer + (squareSize * x), grid->WidthX * squareSize, lineSize};
             SDL_FillSurfaceRect(GetSurface(), &line, GetColor(1, PixelFmtDetails));
         }
 
-        for (int y = 0; y < (grid.WidthX + 1); y++) {
-            const SDL_Rect line{windowBuffer + (squareSize * y), windowBuffer, lineSize, grid.WidthY * squareSize};
+        for (int y = 0; y < (grid->WidthX + 1); y++) {
+            const SDL_Rect line{windowBuffer + (squareSize * y), windowBuffer, lineSize, grid->WidthY * squareSize};
             SDL_FillSurfaceRect(GetSurface(), &line, GetColor(1, PixelFmtDetails));
         }
 
-        const SDL_Rect line{windowBuffer + (squareSize * grid.WidthX), windowBuffer + (squareSize * grid.WidthY), lineSize, lineSize};
-        SDL_FillSurfaceRect(GetSurface(), &line, GetColor(1, PixelFmtDetails));        
+        const SDL_Rect line{windowBuffer + (squareSize * grid->WidthX), windowBuffer + (squareSize * grid->WidthY), lineSize, lineSize};
+        SDL_FillSurfaceRect(GetSurface(), &line, GetColor(1, PixelFmtDetails));  
+        
+        
     }
 
     // Updates the back buffer onto the screen

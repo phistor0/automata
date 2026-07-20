@@ -29,7 +29,7 @@ int main(int, char**) {
                 isRunning = false;
             }
 
-            EventHandler.HandleEvent(Event, Win.windowBuffer, Win.squareSize, Win.lineSize, Grid.WidthX, Grid.WidthY);
+            EventHandler.HandleEvent(Event, &Grid, Win.windowBuffer, Win.squareSize, Win.lineSize);
         }
 
         // Update objects
@@ -38,7 +38,7 @@ int main(int, char**) {
         Win.BufferClear(); 
 
         // Draws objects onto the back buffer
-        Win.Render(Grid);
+        Win.Render(&Grid);
 
         // Updates the back buffer onto the screen
         Win.Update();
