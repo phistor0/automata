@@ -19,7 +19,7 @@ public:
             vector<int> newRow = {};
 
             for (int x = 0; x < widthX; x++) {
-                newRow.push_back(1);
+                newRow.push_back(0);
             }
 
             arrayIndex.push_back(newRow);

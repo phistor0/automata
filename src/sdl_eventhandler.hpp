@@ -40,7 +40,7 @@ public:
                 cout << mouseX << ", " << mouseY << "\n";
                 cout << gridSquareX << ", " << gridSquareY << "\n" << "\n";
 
-                grid->GridModify(gridSquareY, gridSquareX, 2);
+                grid->GridModify(gridSquareY, gridSquareX, 1);
             }
         }
     }
