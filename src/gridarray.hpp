@@ -8,9 +8,12 @@ using namespace std;
 class GridArray {
 public:
     vector<vector<int>> arrayIndex;
+    int WidthX;
+    int WidthY;
 
     GridArray(int widthX, int widthY) {
-        const int arraySize = widthX * widthY;
+        WidthX = widthX;
+        WidthY = widthY;
 
         for (int y = 0; y < widthY; y++) {
             vector<int> newRow = {};

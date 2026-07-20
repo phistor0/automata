@@ -18,4 +18,4 @@ Build this project and input your desired grid size, and simulation version. Onc
 
 
 
-|| THIS PROJEC T IS A WORK IN PROGRESS! ||
+|| THIS PROJECT IS A WORK IN PROGRESS! ||

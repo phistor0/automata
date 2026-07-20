@@ -3,11 +3,16 @@
 #include <iostream>
 #include "colors.hpp"
 #include "sdl_errorhandler.hpp"
+#include "gridarray.hpp"
 
 using namespace std;
 
 class Window {
 public:
+    int windowBuffer{50};
+    int squareSize{50};
+    int lineSize{5};
+
     // Window constructor
     Window() {
         SDL_WindowFlags Flags{
@@ -41,10 +46,23 @@ public:
     }
 
     // Draws objects onto the back buffer
-    void Render() {
+    void Render(GridArray grid) {
         const SDL_PixelFormatDetails* PixelFmtDetails{
             SDL_GetPixelFormatDetails(GetSurface()->format)
         };
+
+        for (int x = 0; x < (grid.WidthY + 1); x++) {
+            const SDL_Rect line{windowBuffer, windowBuffer + (squareSize * x), grid.WidthX * squareSize, lineSize};
+            SDL_FillSurfaceRect(GetSurface(), &line, GetColor(1, PixelFmtDetails));
+        }
+
+        for (int y = 0; y < (grid.WidthX + 1); y++) {
+            const SDL_Rect line{windowBuffer + (squareSize * y), windowBuffer, lineSize, grid.WidthX * squareSize};
+            SDL_FillSurfaceRect(GetSurface(), &line, GetColor(1, PixelFmtDetails));
+        }
+
+        const SDL_Rect line{windowBuffer + (squareSize * grid.WidthX), windowBuffer + (squareSize * grid.WidthY), lineSize, lineSize};
+        SDL_FillSurfaceRect(GetSurface(), &line, GetColor(1, PixelFmtDetails));        
     }
 
     // Updates the back buffer onto the screen

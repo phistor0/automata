@@ -17,6 +17,7 @@ int main(int, char**) {
     SDL_Init(SDL_INIT_VIDEO); // Initialize SDLVideo
     Window ApplicationWindow; // Create the window using the custom Window class
     SDL_EventHandler EventHandler;
+    GridArray Grid{12, 12};
 
     // Application Loop
     SDL_Event Event;
@@ -37,7 +38,7 @@ int main(int, char**) {
         ApplicationWindow.BufferClear(); 
 
         // Draws objects onto the back buffer
-        ApplicationWindow.Render();
+        ApplicationWindow.Render(Grid);
 
         // Updates the back buffer onto the screen
         ApplicationWindow.Update();
