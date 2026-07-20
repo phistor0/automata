@@ -30,12 +30,14 @@ public:
 
             if (mouseX > windowBuffer && 
                 mouseY > windowBuffer && 
-                mouseX < ((gridWidthX * squareSize) + (gridWidthX * lineSize) - windowBuffer) &&
-                mouseY < ((gridWidthY * squareSize) + (gridWidthX * lineSize) - windowBuffer)
+                mouseX < ((gridWidthX * squareSize) + windowBuffer) &&
+                mouseY < ((gridWidthY * squareSize) + windowBuffer)
             ) {
-                // int gridSquareX = (mouseX - windowBuffer)/(squareSize + lineSize);
+                int gridSquareX = (mouseX - windowBuffer)/(squareSize);
+                int gridSquareY = (mouseY - windowBuffer)/(squareSize);
 
                 cout << mouseX << ", " << mouseY << "\n";
+                cout << gridSquareX << ", " << gridSquareY << "\n" << "\n";
             }
         }
     }
