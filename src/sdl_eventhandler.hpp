@@ -40,7 +40,26 @@ public:
                 cout << mouseX << ", " << mouseY << "\n";
                 cout << gridSquareX << ", " << gridSquareY << "\n" << "\n";
 
-                grid->GridModify(gridSquareY, gridSquareX, 1);
+                grid->GridAddRemove(gridSquareY, gridSquareX, 1);
+            }
+        }
+
+        if (E.type == SDL_EVENT_MOUSE_BUTTON_UP && E.button.button == SDL_BUTTON_RIGHT) {
+            int mouseX = E.button.x;
+            int mouseY = E.button.y;
+
+            if (mouseX > windowBuffer && 
+                mouseY > windowBuffer && 
+                mouseX < ((grid->WidthX * squareSize) + windowBuffer) &&
+                mouseY < ((grid->WidthY * squareSize) + windowBuffer)
+            ) {
+                int gridSquareX = (mouseX - windowBuffer)/(squareSize);
+                int gridSquareY = (mouseY - windowBuffer)/(squareSize);
+
+                cout << mouseX << ", " << mouseY << "\n";
+                cout << gridSquareX << ", " << gridSquareY << "\n" << "\n";
+
+                grid->GridAddRemove(gridSquareY, gridSquareX, 0);
             }
         }
     }
