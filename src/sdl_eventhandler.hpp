@@ -62,5 +62,9 @@ public:
                 grid->GridAddRemove(gridSquareY, gridSquareX, 0);
             }
         }
+
+        if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_LCTRL) {
+            cout << "inspector opened" << "\n";
+        }
     }
 };

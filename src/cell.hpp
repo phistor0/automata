@@ -21,7 +21,9 @@ public:
     int x; // relative x positon
     int y; // relative y position
 
-    Cell(int posX, int posY, int velocityXFactor, int velocityYFactor, int protons, int neutrons, int electrons) {
+    bool isAlive;
+
+    Cell(int posX, int posY, int velocityXFactor, int velocityYFactor, int protons, int neutrons, int electrons, bool alive = true) {
         X = posX;
         Y = posY;
         
@@ -32,6 +34,8 @@ public:
         vx = velocityXFactor;
         vy = velocityYFactor;
         c = protons - electrons;
+
+        isAlive = alive;
     } // transfer all paramters to real variables
 
     void Update() {

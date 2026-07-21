@@ -9,6 +9,7 @@
 #include "sdl_errorhandler.hpp"
 #include "gridarray.hpp"
 #include "text.hpp"
+#include "cell.hpp"
 
 using namespace std;
 
@@ -18,10 +19,15 @@ public:
     int squareSize{50};
     int lineSize{5};
     int boxSizeX{400};
-    int boxSizeY{900};
+    int boxSizeY{500};
 
     int textBuffer{30};
     float textHeaderSize{38.0f};
+    float textBodySize{25.0f};
+
+    bool inspectorOpened = true;
+
+    Cell inspectedCell{0, 0, 0, 0, 0, 0, 0, false};
 
     // Window constructor
     Window() {
@@ -91,8 +97,26 @@ public:
         const SDL_Rect infobox{(windowBuffer * 2) + (squareSize * grid->WidthX), windowBuffer, boxSizeX, boxSizeY};
         SDL_FillSurfaceRect(GetSurface(), &infobox, GetColor(1, PixelFmtDetails));
 
-        Text headerText{"Atom #1", (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + textBuffer, textHeaderSize};
+        Text headerText{"Inspector: ", (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + textBuffer, textHeaderSize};
         headerText.Render(GetSurface());
+
+        if (inspectorOpened == false) {
+            Text inspectorHeader{"No cell inspected yet.", (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 2), textBodySize};
+            inspectorHeader.Render(GetSurface());
+        }
+        else /*if (inspectedCell.isAlive = true)*/ {
+            Text trans{"Transform: " + std::to_string(inspectedCell.X) + ", " + std::to_string(inspectedCell.Y), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 3), textBodySize};
+            Text vel{"Velocity: " + std::to_string(inspectedCell.vx) + ", " + std::to_string(inspectedCell.vy), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize * 2)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 4), textBodySize};
+            Text pro{"Protons: " + std::to_string(inspectedCell.P), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize * 3)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 5), textBodySize};
+            Text neu{"Neutrons: " + std::to_string(inspectedCell.N), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize * 4)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 6), textBodySize};
+            Text elec{"Electrons: " + std::to_string(inspectedCell.E), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize * 5)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 7), textBodySize};
+            
+            trans.Render(GetSurface());
+            vel.Render(GetSurface());
+            pro.Render(GetSurface());
+            neu.Render(GetSurface());
+            elec.Render(GetSurface());
+        }
     }
 
     // Updates the back buffer onto the screen
