@@ -24,6 +24,7 @@ Build this project and input your desired grid size, and simulation version. Onc
 ## Keybinds
 
 **Left Click**: Left click on any grid square to add an "atom" to it. 
+**Right Click**: Right click on any grid square with an "atom" to remove it.
 
 
 

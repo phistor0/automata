@@ -1,10 +1,14 @@
 #pragma once
+
 #include <SDL3/SDL.h>
+
 #include <iostream>
 #include <vector>
+
 #include "colors.hpp"
 #include "sdl_errorhandler.hpp"
 #include "gridarray.hpp"
+#include "text.hpp"
 
 using namespace std;
 
@@ -13,6 +17,11 @@ public:
     int windowBuffer{50};
     int squareSize{50};
     int lineSize{5};
+    int boxSizeX{400};
+    int boxSizeY{900};
+
+    int textBuffer{30};
+    float textHeaderSize{38.0f};
 
     // Window constructor
     Window() {
@@ -78,8 +87,12 @@ public:
 
         const SDL_Rect line{windowBuffer + (squareSize * grid->WidthX), windowBuffer + (squareSize * grid->WidthY), lineSize, lineSize};
         SDL_FillSurfaceRect(GetSurface(), &line, GetColor(1, PixelFmtDetails));  
-        
-        
+
+        const SDL_Rect infobox{(windowBuffer * 2) + (squareSize * grid->WidthX), windowBuffer, boxSizeX, boxSizeY};
+        SDL_FillSurfaceRect(GetSurface(), &infobox, GetColor(1, PixelFmtDetails));
+
+        Text headerText{"Atom #1", (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + textBuffer, textHeaderSize};
+        headerText.Render(GetSurface());
     }
 
     // Updates the back buffer onto the screen

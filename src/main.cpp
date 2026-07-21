@@ -2,7 +2,7 @@
 #include <SDL3/SDL_main.h>
 #include <SDL3/SDL_keyboard.h>
 // #include <SDL3_image/SDL_image.h>
-// #include <SDL3_ttf/SDL_ttf.h>
+#include <SDL3_ttf/SDL_ttf.h>
 
 #include "window.hpp"
 #include "sdl_errorhandler.hpp"
@@ -15,6 +15,8 @@ int main(int, char**) {
     // Initialization
     
     SDL_Init(SDL_INIT_VIDEO); // Initialize SDLVideo
+    TTF_Init(); // Initialize SDL Text
+
     Window Win; // Create the window using the custom Window class
     SDL_EventHandler EventHandler;
     GridArray Grid{24, 14};
@@ -47,6 +49,7 @@ int main(int, char**) {
 
 
     // Shutdown
+    TTF_Quit(); // Quit SDL Text
     SDL_Quit(); // Quit SDL
 
     return 0;
