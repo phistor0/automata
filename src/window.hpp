@@ -59,7 +59,7 @@ public:
             vector<int> row;
             row = grid->arrayIndex[y];
             for (int x = 0; x < (grid->WidthX); x++) {
-                if (row[x] == 2) {
+                if (row[x] == 1) {
                     const SDL_Rect cell{windowBuffer + (x * squareSize), windowBuffer + (y * squareSize), squareSize, squareSize};
                     SDL_FillSurfaceRect(GetSurface(), &cell, GetColor(3, PixelFmtDetails));
                 }
