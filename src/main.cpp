@@ -33,6 +33,7 @@ int main(int, char**) {
         }
 
         // Update objects
+        Grid.UpdateGrid();
 
         // Removes existing data on the back buffer by painting it backgroundcolor
         Win.BufferClear(); 

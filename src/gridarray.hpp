@@ -60,4 +60,20 @@ public:
     int RetrieveValue(int rowY, int columnX) {
         return arrayIndex[rowY][columnX];
     }
+
+    void UpdateGrid() {
+        for (int y = 0; y < WidthY; y++) {
+            vector<int> newRow = {};
+
+            for (int x = 0; x < WidthX; x++) {
+                newRow.push_back(0);
+            }
+
+            arrayIndex.push_back(newRow);
+        }
+
+        for (int i = 0; i < cellIndex.size(); i++) {
+            arrayIndex[cellIndex[i].Y][cellIndex[i].X] = 1;
+        }
+    }
 };
