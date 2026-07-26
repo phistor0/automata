@@ -26,8 +26,8 @@ public:
     bool isAlive;
 
     Cell(int posX, int posY, int velocityXFactor, int velocityYFactor, int protons, int neutrons, int electrons, bool alive = true) {
-        X = posX;
-        Y = posY;
+        x = posX;
+        y = posY;
         
         P = protons;
         N = neutrons;

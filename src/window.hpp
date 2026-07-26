@@ -37,7 +37,7 @@ public:
         }; // Flags for the SDL window
 
         SDLWindow = SDL_CreateWindow(
-            "Automata", 800, 300, Flags
+            "Automata", 2000, 1000, Flags
         ); // Create the window       
     } 
 

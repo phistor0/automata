@@ -8,6 +8,8 @@
 #include "sdl_errorhandler.hpp"
 #include "sdl_eventhandler.hpp"
 
+#include <thread>
+
 using namespace std;
 
 
@@ -25,6 +27,9 @@ int main(int, char**) {
     SDL_Event Event;
 
     bool isRunning = true;
+
+    bool isSimulating = false;
+    float simulationTick = 1.5f;
 
 
     while (isRunning) {
@@ -44,12 +49,19 @@ int main(int, char**) {
         // Update objects
         Grid.UpdateGrid();
 
+        isSimulating = Grid.isSimulating;
+
         // Removes existing data on the back buffer by painting it backgroundcolor
         Win.BufferClear(); 
 
         // Draws objects onto the back buffer
         Win.Render(&Grid);
 
+        /*
+        if(isSimulating) {
+            this_thread::sleep_for(std::chrono::seconds(1));
+        }*/
+        
         // Updates the back buffer onto the screen
         Win.Update();
     }
