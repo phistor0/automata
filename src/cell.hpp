@@ -15,11 +15,11 @@ public:
     int c; // charge
 
     // the velocity factor is the number of turns it takes for an atom to move one cell in that component direction
-    int vx; // velocity factor X component
-    int vy; // velocity factor Y component
+    float vx; // velocity factor X component
+    float vy; // velocity factor Y component
 
-    int x; // relative x positon
-    int y; // relative y position
+    float x; // relative x positon
+    float y; // relative y position
 
     int cellID;
 
@@ -46,20 +46,22 @@ public:
     } // transfer all paramters to real variables
 
     void Update(int gridWidthX, int gridWidthY) {
-        if(vx != 0) {x = x + (1/vx);}
-        if(vy != 0) {y = y + (1/vy);}
-
-        if (X == gridWidthX - 1) {
-            vx = -vx;
-        }
-
-        if (Y == gridWidthY - 1) {
-            vy = -vy;
-        }
+        if(vx != 0) {x += (1/vx);}
+        if(vy != 0) {y += (1/vy);}
  
         X = floor(x); // rounds down tangible X position value from the relative value
         Y = floor(y); // rounds down tangible Y position value from the relative value
 
+        if (X == gridWidthX - 1 || X == 0) {
+            vx = -vx;
+        }
+
+        if (Y == gridWidthY - 1 || X == 0) {
+            vy = -vy;
+        }
+
         c = P - E;
+
+        cout << "updating: " << cellID;
     }
 };

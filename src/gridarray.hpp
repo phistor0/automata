@@ -96,6 +96,8 @@ public:
 
     void UpdateGrid() {
         // reset arrayIndex
+        arrayIndex.clear();
+
         for (int y = 0; y < WidthY; y++) {
             vector<int> newRow = {};
 
@@ -106,11 +108,15 @@ public:
             arrayIndex.push_back(newRow);
         }
 
-        /*
-        // modify positions of all atoms
-        for (int a = 0; a < cellIndex.size(); a++) {
-            cellIndex[a].Update(WidthX, WidthY);
-        }*/
+        if (isSimulating) {
+            // modify positions of all atoms
+
+            cout << "Updating all cells: " << "\n";
+            for (int a = 0; a < cellIndex.size(); a++) {
+                cellIndex[a].Update(WidthX, WidthY);
+            }
+            cout << "Updated all cells." << "\n\n";
+        }
         
             
         // update arrayIndex with positions of all atoms
