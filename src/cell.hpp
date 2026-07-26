@@ -56,7 +56,7 @@ public:
             vx = -vx;
         }
 
-        if (Y == gridWidthY - 1 || X == 0) {
+        if (Y == gridWidthY - 1 || Y == 0) {
             vy = -vy;
         }
 
