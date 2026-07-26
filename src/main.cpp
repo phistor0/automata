@@ -29,8 +29,6 @@ int main(int, char**) {
     bool isRunning = true;
 
     bool isSimulating = false;
-    float simulationTick = 1.5f;
-
 
     while (isRunning) {
         while(SDL_PollEvent(&Event)) {
