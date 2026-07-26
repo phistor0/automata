@@ -84,5 +84,11 @@ public:
                 grid->UpdateInspectedCell(gridSquareX, gridSquareY);
             }
         }
+
+        /*
+        // Space -- Pause/Unpause
+        if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_SPACE) {
+            grid->isSimulating = !grid->isSimulating;
+        }*/
     }
 };

@@ -26,6 +26,7 @@ int main(int, char**) {
 
     bool isRunning = true;
 
+    bool isSimulating = false;
 
     while (isRunning) {
         while(SDL_PollEvent(&Event)) {

@@ -23,6 +23,8 @@ public:
     bool cellExists = false;
     Cell inspectedCell{0, 0, 0, 0, 0, 0, 0, false};
 
+    bool isSimulating = false;
+
     GridArray(int widthX, int widthY) {
         WidthX = widthX;
         WidthY = widthY;
@@ -90,11 +92,13 @@ public:
             arrayIndex.push_back(newRow);
         }
 
+        
         // modify positions of all atoms
         for (int a = 0; a < cellIndex.size(); a++) {
             cellIndex[a].Update(WidthX, WidthY);
         }
         
+            
         // update arrayIndex with positions of all atoms
         for (int i = 0; i < cellIndex.size(); i++) {
             arrayIndex[cellIndex[i].Y][cellIndex[i].X] = 1;
