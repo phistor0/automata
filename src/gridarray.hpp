@@ -89,6 +89,22 @@ public:
             inspectedCellPtr->vx = inspectedCellPtr->vx + modifier;
             UpdateInspectedCell(inspectedCellPtr->X, inspectedCellPtr->Y);
         }
+        if (editMode == "VelFactorY") {
+            inspectedCellPtr->vy = inspectedCellPtr->vy + modifier;
+            UpdateInspectedCell(inspectedCellPtr->X, inspectedCellPtr->Y);
+        }
+        if (editMode == "Proton") {
+            inspectedCellPtr->P = inspectedCellPtr->P + modifier;
+            UpdateInspectedCell(inspectedCellPtr->X, inspectedCellPtr->Y);
+        }
+        if (editMode == "Neutron") {
+            inspectedCellPtr->N = inspectedCellPtr->N + modifier;
+            UpdateInspectedCell(inspectedCellPtr->X, inspectedCellPtr->Y);
+        }
+        if (editMode == "Electron") {
+            inspectedCellPtr->E = inspectedCellPtr->E + modifier;
+            UpdateInspectedCell(inspectedCellPtr->X, inspectedCellPtr->Y);
+        }
         else {
             cout << "not editing";
         }

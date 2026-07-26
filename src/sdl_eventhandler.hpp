@@ -107,6 +107,70 @@ public:
             }
         }
 
+        // S -- Toggle Editing Mode for Velocity Factor Y Component
+        if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_S) {
+            if(inBounds) {
+                if (isEditing == false) {
+                    isEditing = true;
+                    editingMode = "VelFactorY";
+                    cout << "editing vfy";
+                }
+                else if (isEditing == true) {
+                    isEditing = false;
+                    editingMode = "";
+                    cout << "not in editing mode";
+                }
+            }
+        }
+
+        // Q -- Toggle Editing Mode for Protons
+        if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_Q) {
+            if(inBounds) {
+                if (isEditing == false) {
+                    isEditing = true;
+                    editingMode = "Proton";
+                    cout << "editing protons";
+                }
+                else if (isEditing == true) {
+                    isEditing = false;
+                    editingMode = "";
+                    cout << "not in editing mode";
+                }
+            }
+        }
+
+        // W -- Toggle Editing Mode for Neutrons
+        if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_W) {
+            if(inBounds) {
+                if (isEditing == false) {
+                    isEditing = true;
+                    editingMode = "Neutron";
+                    cout << "editing neutrons";
+                }
+                else if (isEditing == true) {
+                    isEditing = false;
+                    editingMode = "";
+                    cout << "not in editing mode";
+                }
+            }
+        }
+
+        // E -- Toggle Editing Mode for Electrons
+        if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_E) {
+            if(inBounds) {
+                if (isEditing == false) {
+                    isEditing = true;
+                    editingMode = "Electron";
+                    cout << "editing electrons";
+                }
+                else if (isEditing == true) {
+                    isEditing = false;
+                    editingMode = "";
+                    cout << "not in editing mode";
+                }
+            }
+        }
+
         if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_UP) {
             cout << "increased";
 
