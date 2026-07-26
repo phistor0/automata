@@ -46,7 +46,6 @@ int main(int, char**) {
 
         // Update objects
         Grid.UpdateGrid();
-
         isSimulating = Grid.isSimulating;
 
         // Removes existing data on the back buffer by painting it backgroundcolor
@@ -55,10 +54,12 @@ int main(int, char**) {
         // Draws objects onto the back buffer
         Win.Render(&Grid);
 
-        /*
+        
         if(isSimulating) {
             this_thread::sleep_for(std::chrono::seconds(1));
-        }*/
+
+            cout << "simulating";
+        }
         
         // Updates the back buffer onto the screen
         Win.Update();

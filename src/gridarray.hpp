@@ -92,11 +92,11 @@ public:
             arrayIndex.push_back(newRow);
         }
 
-        
+        /*
         // modify positions of all atoms
         for (int a = 0; a < cellIndex.size(); a++) {
             cellIndex[a].Update(WidthX, WidthY);
-        }
+        }*/
         
             
         // update arrayIndex with positions of all atoms

@@ -28,6 +28,9 @@ public:
     Cell(int posX, int posY, int velocityXFactor, int velocityYFactor, int protons, int neutrons, int electrons, bool alive = true) {
         x = posX;
         y = posY;
+
+        X = floor(x); // rounds down tangible X position value from the relative value
+        Y = floor(y); // rounds down tangible Y position value from the relative value
         
         P = protons;
         N = neutrons;
