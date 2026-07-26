@@ -25,7 +25,8 @@ public:
     float textHeaderSize{38.0f};
     float textBodySize{25.0f};
 
-    bool inspectorOpened = true;
+    bool inspectorOpened = false;
+    bool cellExists = false;
 
     Cell inspectedCell{0, 0, 0, 0, 0, 0, 0, false};
 
@@ -101,16 +102,26 @@ public:
         headerText.Render(GetSurface());
 
         if (inspectorOpened == false) {
-            Text inspectorHeader{"No cell inspected yet.", (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 2), textBodySize};
+            Text inspectorHeader{"No atom inspected yet.", (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 2), textBodySize};
             inspectorHeader.Render(GetSurface());
         }
-        else /*if (inspectedCell.isAlive = true)*/ {
-            Text trans{"Transform: " + std::to_string(inspectedCell.X) + ", " + std::to_string(inspectedCell.Y), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 3), textBodySize};
-            Text vel{"Velocity: " + std::to_string(inspectedCell.vx) + ", " + std::to_string(inspectedCell.vy), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize * 2)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 4), textBodySize};
-            Text pro{"Protons: " + std::to_string(inspectedCell.P), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize * 3)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 5), textBodySize};
-            Text neu{"Neutrons: " + std::to_string(inspectedCell.N), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize * 4)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 6), textBodySize};
-            Text elec{"Electrons: " + std::to_string(inspectedCell.E), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize * 5)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 7), textBodySize};
+
+        else if (inspectorOpened == true && cellExists == false) {
+            Text inspectorHeader{"No atom exists in this space.", (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 2), textBodySize};
             
+            inspectorHeader.Render(GetSurface());
+        }
+        else if (inspectorOpened == true && cellExists == true) {
+            Text inspectorHeader{"Atom #: " + std::to_string(inspectedCell.cellID), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 2), textBodySize};
+
+            Text trans{"Transform: " + std::to_string(inspectedCell.X) + ", " + std::to_string(inspectedCell.Y), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 4), textBodySize};
+            Text vel{"Velocity: " + std::to_string(inspectedCell.vx) + ", " + std::to_string(inspectedCell.vy), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize * 2)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 4), textBodySize};
+            
+            Text pro{"Protons: " + std::to_string(inspectedCell.P), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize * 3)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 5), textBodySize};
+            Text neu{"Neutrons: " + std::to_string(inspectedCell.N), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize * 4)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 5), textBodySize};
+            Text elec{"Electrons: " + std::to_string(inspectedCell.E), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize * 5)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 5), textBodySize};
+            
+            inspectorHeader.Render(GetSurface());
             trans.Render(GetSurface());
             vel.Render(GetSurface());
             pro.Render(GetSurface());

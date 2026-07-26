@@ -23,13 +23,20 @@ int main(int, char**) {
 
     // Application Loop
     SDL_Event Event;
+
     bool isRunning = true;
+
+
     while (isRunning) {
         while(SDL_PollEvent(&Event)) {
             // Exit application loop if SDL detects a quit call
             if(Event.type == SDL_EVENT_QUIT) { 
                 isRunning = false;
             }
+
+            Win.inspectorOpened = Grid.inspectorOpened;
+            Win.cellExists = Grid.cellExists;
+            Win.inspectedCell = Grid.inspectedCell;
 
             EventHandler.HandleEvent(Event, &Grid, Win.windowBuffer, Win.squareSize, Win.lineSize);
         }

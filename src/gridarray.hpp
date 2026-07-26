@@ -19,6 +19,10 @@ public:
 
     int numCells = 0;
 
+    bool inspectorOpened = false;
+    bool cellExists = false;
+    Cell inspectedCell{0, 0, 0, 0, 0, 0, 0, false};
+
     GridArray(int widthX, int widthY) {
         WidthX = widthX;
         WidthY = widthY;
@@ -59,6 +63,19 @@ public:
 
     int RetrieveValue(int rowY, int columnX) {
         return arrayIndex[rowY][columnX];
+    }
+
+    void UpdateInspectedCell(int x, int y) {
+        for (int i = 0; i < cellIndex.size(); i++) {
+            if (cellIndex[i].X == x && cellIndex[i].Y == y) {
+                inspectedCell = cellIndex[i];
+                cellExists = true;
+                break;
+            }
+            else {
+                cellExists = false;
+            }
+        }
     }
 
     void UpdateGrid() {

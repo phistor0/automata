@@ -21,6 +21,8 @@ public:
     int x; // relative x positon
     int y; // relative y position
 
+    int cellID;
+
     bool isAlive;
 
     Cell(int posX, int posY, int velocityXFactor, int velocityYFactor, int protons, int neutrons, int electrons, bool alive = true) {
@@ -36,6 +38,8 @@ public:
         c = protons - electrons;
 
         isAlive = alive;
+
+        cellID = rand() % 100000000001;
     } // transfer all paramters to real variables
 
     void Update() {

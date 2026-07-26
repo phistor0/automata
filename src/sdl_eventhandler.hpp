@@ -8,32 +8,38 @@ using namespace std;
 
 class SDL_EventHandler {
 public:
-    bool KEYS[322];
-
     SDL_EventHandler() {
-        for (int i = 0; i < 322; i++) {
-            KEYS[i] = false;
-        } 
+
     }
+    
+    bool MouseInBoudnds(GridArray* grid, int windowBuffer, int squareSize) {
+        float mouseX;
+        float mouseY;
 
-    void KeyIn(int key, bool status) {
-        KEYS[key] = status;
-    };
+        SDL_GetMouseState(&mouseX, &mouseY);
 
-    bool KeyOut(int key) {
-        return KEYS[key];
+        if (mouseX > windowBuffer && 
+            mouseY > windowBuffer && 
+            mouseX < ((grid->WidthX * squareSize) + windowBuffer) &&
+            mouseY < ((grid->WidthY * squareSize) + windowBuffer)
+        ) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     void HandleEvent(SDL_Event& E, GridArray* grid, int windowBuffer, int squareSize, int lineSize) {
+        bool inBounds = MouseInBoudnds(grid, windowBuffer, squareSize);
+        
+        // Left Click -- Create a new atom
         if (E.type == SDL_EVENT_MOUSE_BUTTON_UP && E.button.button == SDL_BUTTON_LEFT) {
             int mouseX = E.button.x;
             int mouseY = E.button.y;
-
-            if (mouseX > windowBuffer && 
-                mouseY > windowBuffer && 
-                mouseX < ((grid->WidthX * squareSize) + windowBuffer) &&
-                mouseY < ((grid->WidthY * squareSize) + windowBuffer)
-            ) {
+            
+            if (inBounds)
+            {
                 int gridSquareX = (mouseX - windowBuffer)/(squareSize);
                 int gridSquareY = (mouseY - windowBuffer)/(squareSize);
 
@@ -44,15 +50,12 @@ public:
             }
         }
 
+        // Right Click -- Delete an existing atom
         if (E.type == SDL_EVENT_MOUSE_BUTTON_UP && E.button.button == SDL_BUTTON_RIGHT) {
             int mouseX = E.button.x;
             int mouseY = E.button.y;
 
-            if (mouseX > windowBuffer && 
-                mouseY > windowBuffer && 
-                mouseX < ((grid->WidthX * squareSize) + windowBuffer) &&
-                mouseY < ((grid->WidthY * squareSize) + windowBuffer)
-            ) {
+            if (inBounds) {
                 int gridSquareX = (mouseX - windowBuffer)/(squareSize);
                 int gridSquareY = (mouseY - windowBuffer)/(squareSize);
 
@@ -63,8 +66,23 @@ public:
             }
         }
 
+        // Left CTRL -- Inspect an atom
         if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_LCTRL) {
-            cout << "inspector opened" << "\n";
+            float mouseX;
+            float mouseY;
+
+            SDL_GetMouseState(&mouseX, &mouseY);
+
+            if (inBounds) {
+                cout << "inspector opened" << "\n";
+
+                grid->inspectorOpened = true;
+
+                int gridSquareX = (mouseX - windowBuffer)/(squareSize);
+                int gridSquareY = (mouseY - windowBuffer)/(squareSize);
+
+                grid->UpdateInspectedCell(gridSquareX, gridSquareY);
+            }
         }
     }
 };
