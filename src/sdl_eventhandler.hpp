@@ -3,11 +3,15 @@
 #include <SDL3/SDL_keyboard.h>
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
 class SDL_EventHandler {
 public:
+    string editingMode = "";
+    bool isEditing = false;
+
     SDL_EventHandler() {
 
     }
@@ -35,15 +39,12 @@ public:
         
         // Left Click -- Create a new atom
         if (E.type == SDL_EVENT_MOUSE_BUTTON_UP && E.button.button == SDL_BUTTON_LEFT) {
-            int mouseX = E.button.x;
-            int mouseY = E.button.y;
-            
             if (inBounds)
             {
-                int gridSquareX = (mouseX - windowBuffer)/(squareSize);
-                int gridSquareY = (mouseY - windowBuffer)/(squareSize);
+                int gridSquareX = (E.button.x - windowBuffer)/(squareSize);
+                int gridSquareY = (E.button.y - windowBuffer)/(squareSize);
 
-                cout << mouseX << ", " << mouseY << "\n";
+                cout << E.button.x << ", " << E.button.y << "\n";
                 cout << gridSquareX << ", " << gridSquareY << "\n" << "\n";
 
                 grid->GridAddRemove(gridSquareY, gridSquareX, 1);
@@ -56,10 +57,10 @@ public:
             int mouseY = E.button.y;
 
             if (inBounds) {
-                int gridSquareX = (mouseX - windowBuffer)/(squareSize);
-                int gridSquareY = (mouseY - windowBuffer)/(squareSize);
+                int gridSquareX = (E.button.x - windowBuffer)/(squareSize);
+                int gridSquareY = (E.button.y - windowBuffer)/(squareSize);
 
-                cout << mouseX << ", " << mouseY << "\n";
+                cout << E.button.x << ", " << E.button.y << "\n";
                 cout << gridSquareX << ", " << gridSquareY << "\n" << "\n";
 
                 grid->GridAddRemove(gridSquareY, gridSquareX, 0);
@@ -85,10 +86,37 @@ public:
             }
         }
 
-        
         // Space -- Pause/Unpause
         if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_SPACE) {
             grid->isSimulating = !grid->isSimulating;
+        }
+
+        // A -- Toggle Editing Mode for Velocity Factor X Component
+        if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_A) {
+            if(inBounds) {
+                if (isEditing == false) {
+                    isEditing = true;
+                    editingMode = "VelFactorX";
+                    cout << "editing vfx";
+                }
+                else if (isEditing == true) {
+                    isEditing = false;
+                    editingMode = "";
+                    cout << "not in editing mode";
+                }
+            }
+        }
+
+        if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_UP) {
+            cout << "increased";
+
+            grid->EditCell(editingMode, 1);
+        }
+
+        if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_DOWN) {
+            cout << "decreased";
+
+            grid->EditCell(editingMode, -1);
         }
     }
 };

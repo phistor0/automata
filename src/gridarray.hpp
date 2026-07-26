@@ -5,6 +5,7 @@
 #include <SDL3/SDL.h>
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -21,7 +22,8 @@ public:
 
     bool inspectorOpened = false;
     bool cellExists = false;
-    Cell inspectedCell{0, 0, 0, 0, 0, 0, 0, false};
+    Cell inspectedCell{0, 0, 0, 0, 1, 1, 1, false};
+    Cell* inspectedCellPtr;
 
     bool isSimulating = false;
 
@@ -70,13 +72,25 @@ public:
     void UpdateInspectedCell(int x, int y) {
         for (int i = 0; i < cellIndex.size(); i++) {
             if (cellIndex[i].X == x && cellIndex[i].Y == y) {
-                inspectedCell = cellIndex[i];
+                inspectedCellPtr = &cellIndex[i];
+                inspectedCell = *inspectedCellPtr;
+                
                 cellExists = true;
                 break;
             }
             else {
                 cellExists = false;
             }
+        }
+    }
+
+    void EditCell(string editMode, int modifier) {
+        if (editMode == "VelFactorX") {
+            inspectedCellPtr->vx = inspectedCellPtr->vx + modifier;
+            UpdateInspectedCell(inspectedCellPtr->X, inspectedCellPtr->Y);
+        }
+        else {
+            cout << "not editing";
         }
     }
 
