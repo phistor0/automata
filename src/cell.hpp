@@ -42,10 +42,18 @@ public:
         cellID = rand() % 100000000001;
     } // transfer all paramters to real variables
 
-    void Update() {
+    void Update(int gridWidthX, int gridWidthY) {
         x = x + (1/vx);
         y = y + (1/vy);
 
+        if (X == gridWidthX - 1) {
+            vx = -vx;
+        }
+
+        if (Y == gridWidthY - 1) {
+            vy = -vy;
+        }
+ 
         X = floor(x); // rounds down tangible X position value from the relative value
         Y = floor(y); // rounds down tangible Y position value from the relative value
 
