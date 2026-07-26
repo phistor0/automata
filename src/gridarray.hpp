@@ -69,17 +69,31 @@ public:
         return arrayIndex[rowY][columnX];
     }
 
-    void UpdateInspectedCell(int x, int y) {
+    void UpdateInspectedCell(int xORcellID, int y, int mode = 0) {
         for (int i = 0; i < cellIndex.size(); i++) {
-            if (cellIndex[i].X == x && cellIndex[i].Y == y) {
-                inspectedCellPtr = &cellIndex[i];
-                inspectedCell = *inspectedCellPtr;
-                
-                cellExists = true;
-                break;
+            if (mode == 0) {
+                if (cellIndex[i].X == xORcellID && cellIndex[i].Y == y) {
+                    inspectedCellPtr = &cellIndex[i];
+                    inspectedCell = *inspectedCellPtr;
+                    
+                    cellExists = true;
+                    break;
+                }
+                else {
+                    cellExists = false;
+                }
             }
-            else {
-                cellExists = false;
+            if (mode == 1) {
+                if (cellIndex[i].cellID == xORcellID) {
+                    inspectedCellPtr = &cellIndex[i];
+                    inspectedCell = cellIndex[i];
+                    
+                    cellExists = true;
+                    break;
+                }
+                else {
+                    cellExists = false;
+                }
             }
         }
     }
@@ -126,7 +140,6 @@ public:
 
         if (isSimulating) {
             // modify positions of all atoms
-
             cout << "Updating all cells: " << "\n";
             for (int a = 0; a < cellIndex.size(); a++) {
                 cellIndex[a].Update(WidthX, WidthY);
@@ -134,6 +147,8 @@ public:
             cout << "Updated all cells." << "\n\n";
         }
         
+        int inspCellID = inspectedCell.cellID;
+        UpdateInspectedCell(inspCellID, 0, 1);
             
         // update arrayIndex with positions of all atoms
         for (int i = 0; i < cellIndex.size(); i++) {

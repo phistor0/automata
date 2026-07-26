@@ -48,6 +48,10 @@ int main(int, char**) {
         Grid.UpdateGrid();
         isSimulating = Grid.isSimulating;
 
+        Win.inspectorOpened = Grid.inspectorOpened;
+        Win.cellExists = Grid.cellExists;
+        Win.inspectedCell = Grid.inspectedCell;
+
         // Removes existing data on the back buffer by painting it backgroundcolor
         Win.BufferClear(); 
 
