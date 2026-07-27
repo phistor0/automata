@@ -141,9 +141,30 @@ public:
         if (isSimulating) {
             // modify positions of all atoms
             cout << "Updating all cells: " << "\n";
+
+            // reset velocities
+            for (int a = 0; a < cellIndex.size(); a++) {
+                cellIndex[a].AtomVelReset();
+            }
+
+            // calculate velocity of each cell based on neighbors
+            for (int a = 0; a < cellIndex.size(); a++) {
+                for (int b = 0; b < cellIndex.size(); b++) {
+                    cellIndex[a].AtomInteraction(cellIndex[b]);
+                }
+            }
+            
+            // update positions of all cells
             for (int a = 0; a < cellIndex.size(); a++) {
                 cellIndex[a].Update(WidthX, WidthY);
             }
+
+            // check to make sure two atoms dont occupy the same cell square
+            /*for (int a = 0; a < cellIndex.size(); a++) {
+                for (int b = 0; b < cellIndex.size(); b++) {
+                    cellIndex[a].DeterminePriority(cellIndex[b]);
+                }
+            }*/
             cout << "Updated all cells." << "\n\n";
         }
         
