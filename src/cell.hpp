@@ -108,19 +108,17 @@ public:
 
         x += Relativize(v, modX, modE, modT);
         y += Relativize(v, modY, modE, modT);
- 
+        
+        // Clamp the relative positions
+        x = max(0.0f, min(x, static_cast<float>(gridWidthX) - 0.001f));
+        y = max(0.0f, min(y, static_cast<float>(gridWidthY) - 0.001f));
+
         X = floor(x); // rounds down tangible X position value from the relative value
         Y = floor(y); // rounds down tangible Y position value from the relative value
 
-        /*
-        if (X == gridWidthX - 1 || X == 0) {
-            vx = -vx;
-        }
-
-        if (Y == gridWidthY - 1 || Y == 0) {
-            vy = -vy;
-        }
-        */
+        
+        
+        
 
         c = P - E;
 
