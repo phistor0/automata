@@ -99,14 +99,6 @@ public:
     }
 
     void EditCell(string editMode, int modifier) {
-        if (editMode == "VelFactorX") {
-            inspectedCellPtr->vx = inspectedCellPtr->vx + modifier;
-            UpdateInspectedCell(inspectedCellPtr->X, inspectedCellPtr->Y);
-        }
-        if (editMode == "VelFactorY") {
-            inspectedCellPtr->vy = inspectedCellPtr->vy + modifier;
-            UpdateInspectedCell(inspectedCellPtr->X, inspectedCellPtr->Y);
-        }
         if (editMode == "Proton") {
             inspectedCellPtr->P = inspectedCellPtr->P + modifier;
             UpdateInspectedCell(inspectedCellPtr->X, inspectedCellPtr->Y);
@@ -149,8 +141,9 @@ public:
 
             // calculate velocity of each cell based on neighbors
             for (int a = 0; a < cellIndex.size(); a++) {
-                for (int b = 0; b < cellIndex.size(); b++) {
+                for (int b = a + 1; b < cellIndex.size(); b++) {
                     cellIndex[a].AtomInteraction(cellIndex[b]);
+                    cellIndex[b].AtomInteraction(cellIndex[a]);
                 }
             }
             

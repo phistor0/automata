@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include <iostream>
 
 using namespace std;
 
@@ -15,12 +16,7 @@ public:
     int c; // charge
     int s;
 
-    // the velocity factor is the number of turns it takes for an atom to move one cell in that component direction
-    float vx; // velocity factor X component
-    float vy; // velocity factor Y component
-
-    float VX;
-    float VY;
+    float v;
 
     float x; // relative x positon
     float y; // relative y position
@@ -29,13 +25,17 @@ public:
 
     bool isAlive;
 
-    float modX;
-    float modY;
+    float modX = 0;
+    float modY = 0;
+    float modE = 0;
+    float modT = 0;
 
     int oldX;
     int oldY;
 
-    Cell(int posX, int posY, int velocityXFactor, int velocityYFactor, int protons, int neutrons, int electrons, bool alive = true) {
+    float vE = 0;
+
+    Cell(int posX, int posY, int velocity, int velocityYFactor, int protons, int neutrons, int electrons, bool alive = true) {
         x = posX;
         y = posY;
 
@@ -46,8 +46,7 @@ public:
         N = neutrons;
         E = electrons;
 
-        vx = velocityXFactor;
-        vy = velocityYFactor;
+        v = velocity;
         c = protons - electrons;
 
         isAlive = alive;
@@ -58,11 +57,13 @@ public:
     } // transfer all paramters to real variables
 
     void AtomVelReset() {
-        vx = 0;
-        vy = 0;
+        v = 0;
 
         modX = 0;
         modY = 0;
+        modE = 0;
+        modT = 0;
+        vE = 0;
 
         s = 0;
 
@@ -78,60 +79,40 @@ public:
         // X
         if (c < 0 && iAtom.c < 0 || c > 0 && iAtom.c > 0) {
             // repel
-            if (X < iAtom.X) {
-                vx -= s;
-            }
-            if (iAtom.X < X) {
-                vx += s;
-            }
-
-            if (Y < iAtom.Y) {
-                vy -= s;
-            }
-            if (iAtom.Y < Y) {
-                vy += s;
-            }
+            v -= s;
         }
+
         else if (c < 0 && iAtom.c > 0 || c > 0 && iAtom.c < 0) {
-            if (X < iAtom.X) {
-                vx += s;
-            }
-            if (iAtom.X < X) {
-                vx -= s;
-            }
-
-            if (Y < iAtom.Y) {
-                vy += s;
-            }
-            if (iAtom.Y < Y) {
-                vy -= s;
-            }
+            // attract
+            v += s;
         }
+
+        cout << "s" << s;
     }
 
-    float Relativize(float vel, float mod) {
-        float VEL = static_cast<float>(vel);
-
-        if (mod < 0) {
-            return -1/(1 + pow(2, -((VEL/mod)-3)));
-        }
-
-        if (mod > 0) {
-            return 1/(1 + pow(2, -((VEL/mod)-3)));
-        }
-
-        else {
+    float Relativize(float vel, float mod, float euc, float tot) {
+        vE = (2.0/3.14159f)*(std::atanf(((1.0f)/(72.0f * euc))*(pow(vel, 3.0f))));
+        
+        if (mod == 0) {
             return 0;
         }
+        else {
+            return (mod/tot)*vE;
+            // return 0.05f*vel*mod;
+        }   
     }
 
     void Update(int gridWidthX, int gridWidthY) {
-        if(vx != 0) {x += Relativize(vx, modX);}
-        if(vy != 0) {y += Relativize(vy, modY);}
+        modE = sqrt((pow(modX, 2) + pow(modY, 2)));
+        modT = abs(modX) + abs(modY);
+
+        x += Relativize(v, modX, modE, modT);
+        y += Relativize(v, modY, modE, modT);
  
         X = floor(x); // rounds down tangible X position value from the relative value
         Y = floor(y); // rounds down tangible Y position value from the relative value
 
+        /*
         if (X == gridWidthX - 1 || X == 0) {
             vx = -vx;
         }
@@ -139,41 +120,24 @@ public:
         if (Y == gridWidthY - 1 || Y == 0) {
             vy = -vy;
         }
+        */
 
         c = P - E;
 
-        cout << "updating: " << cellID << ", MOD: " << modX << ", " << modY <<  ", VELOCITY: " << Relativize(vx, modX) << ", " << Relativize(vy, modY) << ", VF: " << vx << ", " << vy << "\n\n";
+        cout << "updating: " << cellID << ", MOD: " << modX << ", " << modY << ", " << modE << ", VELOCITY: " << Relativize(v, modX, modE, modT) << ", " << Relativize(v, modY, modE, modT) << ", " << vE << ", VF: " << v << ", Pos: " << x << ", " << y << "charge:" << c <<"\n\n";
     }
 
+    /*
     void DeterminePriority(Cell cell) {
-        if (cell.P + cell.N > P + N) {
-            if (Relativize(vx, modX) > Relativize(vy, modY)) {
+        if (cell.P + cell.N > P + N || cell.P + cell.N == P + N && cell.E > E) {
+            if (Relativize(v, modX) >= Relativize(v, modY)) {
                 Y = oldY;
             }
 
-            if (Relativize(vx, modX) < Relativize(vy, modY)) {
-                X = oldX;
-            }
-        }
-        else if (cell.P + cell.N < P + N) {
-            if (cell.E > E) {
-                if (Relativize(vx, modX) > Relativize(vy, modY)) {
-                    Y = oldY;
-                }
-
-                if (Relativize(vx, modX) < Relativize(vy, modY)) {
-                    X = oldX;
-                }
-            }
-        }
-        else {
-            if (Relativize(vx, modX) > Relativize(vy, modY)) {
-                Y = oldY;
-            }
-
-            if (Relativize(vx, modX) < Relativize(vy, modY)) {
+            if (Relativize(v, modX) < Relativize(v, modY)) {
                 X = oldX;
             }
         }
     }
+        */
 };
