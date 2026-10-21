@@ -33,6 +33,9 @@ public:
     int oldX;
     int oldY;
 
+    int oldx;
+    int oldy;
+
     float vE = 0;
 
     Cell(int posX, int posY, int velocity, int velocityYFactor, int protons, int neutrons, int electrons, bool alive = true) {
@@ -68,6 +71,12 @@ public:
         s = 0;
 
         c = P - E;
+
+        oldX = X;
+        oldY = Y;
+
+        oldx = x;
+        oldy = y;
     }
 
     void AtomInteraction(Cell iAtom) {
@@ -116,26 +125,52 @@ public:
         X = floor(x); // rounds down tangible X position value from the relative value
         Y = floor(y); // rounds down tangible Y position value from the relative value
 
-        
-        
-        
-
         c = P - E;
 
         cout << "updating: " << cellID << ", MOD: " << modX << ", " << modY << ", " << modE << ", VELOCITY: " << Relativize(v, modX, modE, modT) << ", " << Relativize(v, modY, modE, modT) << ", " << vE << ", VF: " << v << ", Pos: " << x << ", " << y << "charge:" << c <<"\n\n";
     }
 
     /*
-    void DeterminePriority(Cell cell) {
-        if (cell.P + cell.N > P + N || cell.P + cell.N == P + N && cell.E > E) {
-            if (Relativize(v, modX) >= Relativize(v, modY)) {
-                Y = oldY;
-            }
+    void DeterminePriority(const Cell& cell) {
+        int thisMass = P + N;
+        int otherMass = cell.P + cell.N;
 
-            if (Relativize(v, modX) < Relativize(v, modY)) {
+        // Return if the other atom has lower priority.
+        // cellID breaks ties so exactly one atom yields.
+        bool otherWins =
+            otherMass > thisMass ||
+            (otherMass == thisMass && cell.E > E) ||
+            (otherMass == thisMass && cell.E == E &&
+            cell.cellID < cellID);
+
+        if (!otherWins) {
+            return;
+        }
+
+        float moveX = abs(Relativize(v, modX, modE, modT));
+        float moveY = abs(Relativize(v, modY, modE, modT));
+
+        // Prefer undoing movement on the axis with the
+        // smaller contribution, but fall back if necessary.
+        if (moveX >= moveY) {
+            if (Y != oldY) {
+                Y = oldY;
+                y = oldy;
+            }
+            else if (X != oldX) {
                 X = oldX;
+                x = oldx;
             }
         }
-    }
-        */
+        else {
+            if (X != oldX) {
+                X = oldX;
+                x = oldx;
+            }
+            else if (Y != oldY) {
+                Y = oldY;
+                y = oldy;
+            }
+        }
+    }*/
 };
