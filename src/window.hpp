@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
 #include "colors.hpp"
 #include "sdl_errorhandler.hpp"
@@ -63,7 +64,7 @@ public:
     }
 
     // Draws objects onto the back buffer
-    void Render(GridArray* grid) {
+    void Render(GridArray* grid, int cond) {
         const SDL_PixelFormatDetails* PixelFmtDetails{
             SDL_GetPixelFormatDetails(GetSurface()->format)
         };
@@ -100,6 +101,26 @@ public:
 
         Text headerText{"Inspector: ", (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + textBuffer, textHeaderSize};
         headerText.Render(GetSurface());
+
+        if (cond == 1) {
+            Text editingText{"EDITING: protons", windowBuffer + textBuffer, windowBuffer + textBuffer, textHeaderSize, };
+            editingText.Render(GetSurface());
+        }
+
+        if (cond == 2) {
+            Text editingText{"EDITING: neutrons", windowBuffer + textBuffer, windowBuffer + textBuffer, textHeaderSize};
+            editingText.Render(GetSurface());
+        }
+
+        if (cond == 3) {
+            Text editingText{"EDITING: electrons", windowBuffer + textBuffer, windowBuffer + textBuffer, textHeaderSize};
+            editingText.Render(GetSurface());
+        }
+
+        if (cond == -1) {
+            Text editingText{"SIMULATING", windowBuffer + textBuffer, windowBuffer + textBuffer, textHeaderSize};
+            editingText.Render(GetSurface());
+        }
 
         if (inspectorOpened == false) {
             Text inspectorHeader{"No atom inspected yet.", (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 2), textBodySize};

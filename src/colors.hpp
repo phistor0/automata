@@ -50,6 +50,18 @@ Uint32 GetColor(int colorValue, const SDL_PixelFormatDetails* formatDetails) {
         return lifeColor;
     }
 
+    else if (colorValue == 4) { // status
+        Uint32 statusColor {SDL_MapRGB(
+            formatDetails,
+            nullptr,
+            255,
+            0,
+            0
+        )};
+
+        return statusColor;
+    }
+
     else { // else
         Uint32 backgroundColor {SDL_MapRGB(
             formatDetails,
@@ -61,4 +73,14 @@ Uint32 GetColor(int colorValue, const SDL_PixelFormatDetails* formatDetails) {
 
         return backgroundColor;
     }
+}
+
+SDL_Color UintToColor(Uint32 color)
+{
+	SDL_Color tempcol;
+	tempcol.a = 255;
+	tempcol.r = (color >> 16) & 0xFF;
+	tempcol.g = (color >> 8) & 0xFF;
+	tempcol.b = color & 0xFF;
+	return tempcol;
 }

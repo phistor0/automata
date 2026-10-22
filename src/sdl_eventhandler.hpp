@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "colors.hpp"
 
 using namespace std;
 
@@ -11,6 +12,7 @@ class SDL_EventHandler {
 public:
     string editingMode = "";
     bool isEditing = false;
+    int windowCond = 0;
 
     SDL_EventHandler() {
 
@@ -89,6 +91,13 @@ public:
         // Space -- Pause/Unpause
         if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_SPACE) {
             grid->isSimulating = !grid->isSimulating;
+
+            if (grid->isSimulating) {
+                windowCond = -1;
+            }
+            else if (grid->isSimulating == false) {
+                windowCond = 0;
+            }
         }
 
         // A -- Toggle Editing Mode for Velocity Factor X Component
@@ -128,11 +137,13 @@ public:
             if(inBounds) {
                 if (isEditing == false) {
                     isEditing = true;
+                    windowCond = 1;
                     editingMode = "Proton";
                     cout << "editing protons";
                 }
                 else if (isEditing == true) {
                     isEditing = false;
+                    windowCond = 0;
                     editingMode = "";
                     cout << "not in editing mode";
                 }
@@ -144,11 +155,13 @@ public:
             if(inBounds) {
                 if (isEditing == false) {
                     isEditing = true;
+                    windowCond = 2;
                     editingMode = "Neutron";
                     cout << "editing neutrons";
                 }
                 else if (isEditing == true) {
                     isEditing = false;
+                    windowCond = 0;
                     editingMode = "";
                     cout << "not in editing mode";
                 }
@@ -160,11 +173,13 @@ public:
             if(inBounds) {
                 if (isEditing == false) {
                     isEditing = true;
+                    windowCond = 3;
                     editingMode = "Electron";
                     cout << "editing electrons";
                 }
                 else if (isEditing == true) {
                     isEditing = false;
+                    windowCond = 0;
                     editingMode = "";
                     cout << "not in editing mode";
                 }

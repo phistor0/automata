@@ -56,7 +56,7 @@ int main(int, char**) {
         Win.BufferClear(); 
 
         // Draws objects onto the back buffer
-        Win.Render(&Grid);
+        Win.Render(&Grid, EventHandler.windowCond);
 
         
         if(isSimulating) {

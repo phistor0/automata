@@ -3,14 +3,19 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include <iostream>
 #include <string>
+#include "colors.hpp"
 
 class Text {
 public:
-    Text(const std::string& Content, int posX, int posY, float FontSize = 100.0f) : Font{LoadFont(FontSize)} {
+    SDL_Color color;
+
+    Text(const std::string& Content, int posX, int posY, float FontSize = 100.0f, SDL_Color textColor = {255, 255, 255, 255}) : Font{LoadFont(FontSize)} {
         CreateSurface(Content);
 
         DestinationRectangle.x = posX;
         DestinationRectangle.y = posY;
+
+        color = textColor;
     }
 
     void SetFontSize(float NewSize) {
@@ -52,7 +57,7 @@ protected:
     void CreateSurface(const std::string& Content) {
         SDL_DestroySurface(TextSurface);
 
-        TextSurface = TTF_RenderText_Blended(Font, Content.c_str(), 0, {255, 255, 255, 255});
+        TextSurface = TTF_RenderText_Blended(Font, Content.c_str(), 0, color);
         if (!TextSurface) {
             std::cout << "Error creating TextSurface: " << SDL_GetError() << '\n';
         }
