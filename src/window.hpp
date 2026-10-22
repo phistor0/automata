@@ -73,12 +73,24 @@ public:
         SDL_FillSurfaceRect(GetSurface(), &background, GetColor(2, PixelFmtDetails));  
 
         for (int y = 0; y < (grid->WidthY); y++) {
+            int p = 0;
+            int n = 0;
+            int e = 0;
+
             vector<int> row;
             row = grid->arrayIndex[y];
             for (int x = 0; x < (grid->WidthX); x++) {
                 if (row[x] == 1) {
+                    for (int i = 0; i < static_cast<int>(grid->cellIndex.size()); i++) {
+                        if (grid->cellIndex[i].X == (x) && grid->cellIndex[i].Y == (y)) {
+                            p = grid->cellIndex[i].P;
+                            n = grid->cellIndex[i].N;
+                            e = grid->cellIndex[i].E;
+                        }
+                    }
+
                     const SDL_Rect cell{windowBuffer + (x * squareSize), windowBuffer + (y * squareSize), squareSize, squareSize};
-                    SDL_FillSurfaceRect(GetSurface(), &cell, GetColor(3, PixelFmtDetails));
+                    SDL_FillSurfaceRect(GetSurface(), &cell, DetermineCellColor(p, n, e, PixelFmtDetails));
                 }
             }
         }
