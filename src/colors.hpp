@@ -76,12 +76,14 @@ Uint32 GetColor(int colorValue, const SDL_PixelFormatDetails* formatDetails) {
 }
 
 Uint32 DetermineCellColor(int protons, int neutrons, int electrons, const SDL_PixelFormatDetails* formatDetails) {
+    int particleshift = 35;
+    
     Uint32 cellColor {SDL_MapRGB(
         formatDetails,
         nullptr,
-        (protons * 50),
-        (neutrons * 50),
-        (electrons * 50)
+        (20 + (protons * particleshift)),
+        (20 + (neutrons * particleshift)),
+        (20 + (electrons * particleshift))
     )};
 
     return cellColor;
