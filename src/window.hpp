@@ -17,8 +17,8 @@ using namespace std;
 class Window {
 public:
     int windowBuffer{50};
-    int squareSize{50};
-    int lineSize{5};
+    int squareSize{25};
+    int lineSize{4};
     int boxSizeX{400};
     int boxSizeY{500};
 

@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <random>
 
 using namespace std;
 
@@ -40,6 +41,39 @@ public:
 
             arrayIndex.push_back(newRow);
         }
+    }
+
+    void RandomizeGrid(float fillPercent, int particleMax = 6) {
+        cellIndex.clear();
+        
+        int cellNumber = floor((WidthX*WidthY*fillPercent));
+
+        std::random_device rdp;
+        std::mt19937 genp(rdp());
+        std::uniform_int_distribution<int> distribp(1, particleMax);
+
+        std::random_device rdtx;
+        std::mt19937 gentx(rdtx());
+        std::uniform_int_distribution<int> distribtx(0, (WidthX - 1));
+
+        std::random_device rdty;
+        std::mt19937 genty(rdty());
+        std::uniform_int_distribution<int> distribty(0, (WidthY - 1));
+
+        for (int i = 0; i < cellNumber; i++) {
+            int p = distribp(genp);
+            int n = distribp(genp);
+            int e = distribp(genp);
+
+            int x = distribtx(gentx);
+            int y = distribty(genty);
+
+            cellIndex.push_back({x, y, 0, 0, p, n, e, true});
+        }
+    }
+
+    void FullResetGrid(){
+        cellIndex.clear();
     }
 
     void GridAddRemove(int rowY, int columnX, int value) {

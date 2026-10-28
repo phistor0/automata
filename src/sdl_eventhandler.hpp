@@ -14,6 +14,8 @@ public:
     bool isEditing = false;
     int windowCond = 0;
 
+    float fillpercent = 0.16f;
+
     SDL_EventHandler() {
 
     }
@@ -184,6 +186,14 @@ public:
                     cout << "not in editing mode";
                 }
             }
+        }
+
+        if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_R) {
+            grid->RandomizeGrid(0.0025f);
+        }
+
+        if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_C) {
+            grid->FullResetGrid();
         }
 
         if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_UP) {
