@@ -46,9 +46,10 @@ public:
             {
                 int gridSquareX = (E.button.x - windowBuffer)/(squareSize);
                 int gridSquareY = (E.button.y - windowBuffer)/(squareSize);
-
-                cout << E.button.x << ", " << E.button.y << "\n";
-                cout << gridSquareX << ", " << gridSquareY << "\n" << "\n";
+ 
+                cout << "FROM INPUT STACK (LEFT-CLICK CALL): " << "\n"
+                << "Input (left-click) registered (x, y): " << E.button.x << "px., " << E.button.y << "px." << "\n" 
+                << "Corresponds to input for new atom to be created at (x, y): " << gridSquareX << ", " << gridSquareY << "\n" << "\n\n";
 
                 grid->GridAddRemove(gridSquareY, gridSquareX, 1);
             }
@@ -63,8 +64,9 @@ public:
                 int gridSquareX = (E.button.x - windowBuffer)/(squareSize);
                 int gridSquareY = (E.button.y - windowBuffer)/(squareSize);
 
-                cout << E.button.x << ", " << E.button.y << "\n";
-                cout << gridSquareX << ", " << gridSquareY << "\n" << "\n";
+                cout << "FROM INPUT STACK (RIGHT CLICK CALL): " << "\n"
+                << "Input (right-click) registered (x, y): " << E.button.x << "px., " << E.button.y << "px." << "\n" 
+                << "Corresponds to input for grid to be cleared at (x, y): " << gridSquareX << ", " << gridSquareY << "\n" << "\n\n";
 
                 grid->GridAddRemove(gridSquareY, gridSquareX, 0);
             }

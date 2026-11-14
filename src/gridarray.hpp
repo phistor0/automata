@@ -77,6 +77,8 @@ public:
     }
 
     void GridAddRemove(int rowY, int columnX, int value) {
+        cout << "FROM GRIDARRAY (GRIDADDREMOVE()): " << "\n";
+
         if (value == 0 && arrayIndex[rowY][columnX] == 1) {
             for (int i = 0; i < cellIndex.size(); i++) {
                 if (cellIndex[i].X == columnX && cellIndex[i].Y == rowY) {
@@ -85,18 +87,24 @@ public:
                 }
             }
 
-            cout << cellIndex.size() << "\n";
+            cout << "Grid cleared at (x, y): " << columnX << ", " << rowY << "\n";
         }
 
-        if (value == 1 && arrayIndex[rowY][columnX] == 0) {            
+        else if (value == 1 && arrayIndex[rowY][columnX] == 0) {            
             cellIndex.push_back(Cell{columnX, rowY, 0, 0, 1, 1, 1});
 
-            cout << cellIndex.size() << "\n";
+            cout << "Cell added at (x, y): " << columnX << ", " << rowY << "\n";
         }
+
+        else {
+            cout << "Redundancy in GridAddRemove() function call. No actions taken. " << "\n";
+        }
+
+        cout << "New count of cells in CellIndex: " << cellIndex.size() << "\n";
 
         arrayIndex[rowY][columnX] = value;
 
-        cout << "grid has been modified";
+        cout << "ArrayIndex has been updated." << "\n" << "\n" << "\n";
     }
 
     int RetrieveValue(int rowY, int columnX) {
