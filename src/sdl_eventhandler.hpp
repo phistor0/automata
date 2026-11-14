@@ -7,7 +7,6 @@
 #include "colors.hpp"
 
 using namespace std;
-
 class SDL_EventHandler {
 public:
     string editingMode = "";

@@ -38,6 +38,9 @@ public:
 
     float vE = 0;
 
+    float volatilityfactor = 72.0f;
+
+
     Cell(int posX, int posY, int velocity, int velocityYFactor, int protons, int neutrons, int electrons, bool alive = true) {
         x = posX;
         y = posY;
@@ -82,8 +85,13 @@ public:
     void AtomInteraction(Cell iAtom) {
         s = P + N + iAtom.P + iAtom.N;
 
-        modX += iAtom.X - X; 
-        modY += iAtom.Y - Y; 
+        if (iAtom.X - X != 0) {
+            modX += 1.0f/(iAtom.X - X);
+        }
+        
+        if (iAtom.Y - Y != 0){
+            modY += 1.0f/(iAtom.Y - Y);
+        }
 
         // X
         if (c < 0 && iAtom.c < 0 || c > 0 && iAtom.c > 0) {
@@ -99,24 +107,49 @@ public:
         cout << "s" << s;
     }
 
-    float Relativize(float vel, float mod, float euc, float tot) {
-        vE = (2.0/3.14159f)*(std::atanf(((1.0f)/(72.0f * euc))*(pow(vel, 3.0f))));
+    float Relativize(float vel, float modx, float mody, int setting) {
+        vE = (2.0/3.14159f)*(std::atanf(/*(1.0f)/*/(volatilityfactor * sqrt(pow(modx, 2) + pow(mody, 2)))*(pow(vel, 3.0f))/4096.0f));
+        float angle = std::atanf((mody/modx));
+
+        if (setting == 1) {
+            if (modx == 0) {
+                return 0;
+            }
+            
+            if (mody == 0) {
+                return vE*std::copysignf(1.0f, modx);
+            }
+
+            else {
+                return std::abs(std::sinf(angle))*vE*std::copysignf(1.0f, modx);
+            }  
+        }
         
-        if (mod == 0) {
+        if (setting == 2) {
+            if (mody == 0) {
+                return 0;
+            }
+
+            if (modx == 0) {
+                return vE*std::copysignf(1.0f, mody);
+            }
+
+            else {
+                return std::abs(std::cosf(angle))*vE*std::copysignf(1.0f, mody);
+            }  
+        }
+
+        else {
             return 0;
         }
-        else {
-            return (mod/tot)*vE;
-            // return 0.05f*vel*mod;
-        }   
     }
 
     void Update(int gridWidthX, int gridWidthY) {
         modE = sqrt((pow(modX, 2) + pow(modY, 2)));
         modT = abs(modX) + abs(modY);
 
-        x += Relativize(v, modX, modE, modT);
-        y += Relativize(v, modY, modE, modT);
+        x += Relativize(v, modX, modY, 1);
+        y += Relativize(v, modX, modY, 2);
         
         // Clamp the relative positions
         x = max(0.0f, min(x, static_cast<float>(gridWidthX) - 0.001f));
@@ -127,7 +160,7 @@ public:
 
         c = P - E;
 
-        cout << "updating: " << cellID << ", MOD: " << modX << ", " << modY << ", " << modE << ", VELOCITY: " << Relativize(v, modX, modE, modT) << ", " << Relativize(v, modY, modE, modT) << ", " << vE << ", VF: " << v << ", Pos: " << x << ", " << y << "charge:" << c <<"\n\n";
+        cout << "updating: " << cellID << ", MOD: " << modX << ", " << modY << ", " << modE << ", VELOCITY: " << Relativize(v, modX, modY, 1) << ", " << Relativize(v, modY, modX, 2) << ", " << vE << ", VF: " << v << ", Pos: " << x << ", " << y << "charge:" << c <<"\n\n";
     }
 
     /*
