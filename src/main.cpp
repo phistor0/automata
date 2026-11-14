@@ -20,7 +20,7 @@ int main(int, char**) {
 
     Window Win; // Create the window using the custom Window class
     SDL_EventHandler EventHandler;
-    GridArray Grid{40, 20};
+    GridArray Grid{80, 40};
 
     // Application Loop
     SDL_Event Event;

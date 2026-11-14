@@ -38,7 +38,7 @@ public:
 
     float vE = 0;
 
-    float volatilityfactor = 72.0f;
+    float volatilityfactor = 256.0f;
 
 
     Cell(int posX, int posY, int velocity, int velocityYFactor, int protons, int neutrons, int electrons, bool alive = true) {
@@ -108,7 +108,7 @@ public:
     }
 
     float Relativize(float vel, float modx, float mody, int setting) {
-        vE = (2.0/3.14159f)*(std::atanf(/*(1.0f)/*/(volatilityfactor * sqrt(pow(modx, 2) + pow(mody, 2)))*(pow(vel, 3.0f))/4096.0f));
+        vE = (2.0/3.14159f)*(std::atanf(/*(1.0f)/*/((sqrt(pow(modx, 2) + pow(mody, 2)))*(pow(vel, 3.0f)))/volatilityfactor));
         float angle = std::atanf((mody/modx));
 
         if (setting == 1) {
@@ -160,50 +160,6 @@ public:
 
         c = P - E;
 
-        cout << "updating: " << cellID << ", MOD: " << modX << ", " << modY << ", " << modE << ", VELOCITY: " << Relativize(v, modX, modY, 1) << ", " << Relativize(v, modY, modX, 2) << ", " << vE << ", VF: " << v << ", Pos: " << x << ", " << y << "charge:" << c <<"\n\n";
+        cout << "updating: " << cellID << ", MOD: " << modX << ", " << modY << ", VELOCITY: " << Relativize(v, modX, modY, 1) << ", " << Relativize(v, modY, modX, 2) << ", " << vE << ", VF: " << v << ", Pos: " << x << ", " << y << "charge:" << c <<"\n\n";
     }
-
-    /*
-    void DeterminePriority(const Cell& cell) {
-        int thisMass = P + N;
-        int otherMass = cell.P + cell.N;
-
-        // Return if the other atom has lower priority.
-        // cellID breaks ties so exactly one atom yields.
-        bool otherWins =
-            otherMass > thisMass ||
-            (otherMass == thisMass && cell.E > E) ||
-            (otherMass == thisMass && cell.E == E &&
-            cell.cellID < cellID);
-
-        if (!otherWins) {
-            return;
-        }
-
-        float moveX = abs(Relativize(v, modX, modE, modT));
-        float moveY = abs(Relativize(v, modY, modE, modT));
-
-        // Prefer undoing movement on the axis with the
-        // smaller contribution, but fall back if necessary.
-        if (moveX >= moveY) {
-            if (Y != oldY) {
-                Y = oldY;
-                y = oldy;
-            }
-            else if (X != oldX) {
-                X = oldX;
-                x = oldx;
-            }
-        }
-        else {
-            if (X != oldX) {
-                X = oldX;
-                x = oldx;
-            }
-            else if (Y != oldY) {
-                Y = oldY;
-                y = oldy;
-            }
-        }
-    }*/
 };

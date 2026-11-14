@@ -235,17 +235,17 @@ public:
             return massA > massB;
         }
 
-        if (A.E != B.E) {
+        else if (A.E != B.E) {
             return A.E > B.E;
         }
 
-        // Deterministic tie-breaker.
-        if (A.cellID != B.cellID) {
+        else if (A.cellID != B.cellID) {
             return A.cellID < B.cellID;
         }
-
-        // Handle the unlikely event of duplicate cell IDs.
-        return a < b;
+        
+        else {
+            return a < b;
+        }
     }
 
     void UpdateGrid() {
