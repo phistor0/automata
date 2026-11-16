@@ -26,7 +26,6 @@ public:
     float textHeaderSize{38.0f};
     float textBodySize{25.0f};
 
-    bool inspectorOpened = false;
     bool cellExists = false;
 
     Cell inspectedCell{0, 0, 0, 0, 0, 0, 0, false};
@@ -38,7 +37,7 @@ public:
         }; // Flags for the SDL window
 
         SDLWindow = SDL_CreateWindow(
-            "Automata", 2000, 1000, Flags
+            "Automata", 1200, 1200, Flags
         ); // Create the window       
     } 
 
@@ -134,17 +133,13 @@ public:
             editingText.Render(GetSurface());
         }
 
-        if (inspectorOpened == false) {
-            Text inspectorHeader{"No atom inspected yet.", (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 2), textBodySize};
-            inspectorHeader.Render(GetSurface());
-        }
-
-        else if (inspectorOpened == true && cellExists == false) {
+        if (cellExists == false) {
             Text inspectorHeader{"No atom exists in this space.", (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 2), textBodySize};
             
             inspectorHeader.Render(GetSurface());
         }
-        else if (inspectorOpened == true && cellExists == true) {
+        
+        else if (cellExists == true) {
             Text inspectorHeader{"Atom #: " + std::to_string(inspectedCell.cellID), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 2), textBodySize};
 
             Text trans{"Transform: " + std::to_string(inspectedCell.X) + ", " + std::to_string(inspectedCell.Y), (windowBuffer * 2) + textBuffer + (squareSize * grid->WidthX), windowBuffer + static_cast<int>(std::round(textBodySize)) + static_cast<int>(std::round(textHeaderSize)) + (textBuffer * 4), textBodySize};

@@ -20,7 +20,7 @@ int main(int, char**) {
 
     Window Win; // Create the window using the custom Window class
     SDL_EventHandler EventHandler;
-    GridArray Grid{80, 40};
+    GridArray Grid{25, 40};
 
     // Application Loop
     SDL_Event Event;
@@ -36,7 +36,6 @@ int main(int, char**) {
                 isRunning = false;
             }
 
-            Win.inspectorOpened = Grid.inspectorOpened;
             Win.cellExists = Grid.cellExists;
             Win.inspectedCell = Grid.inspectedCell;
 
@@ -47,7 +46,6 @@ int main(int, char**) {
         Grid.UpdateGrid();
         isSimulating = Grid.isSimulating;
 
-        Win.inspectorOpened = Grid.inspectorOpened;
         Win.cellExists = Grid.cellExists;
         Win.inspectedCell = Grid.inspectedCell;
 

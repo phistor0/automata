@@ -21,7 +21,6 @@ public:
 
     int numCells = 0;
 
-    bool inspectorOpened = false;
     bool cellExists = false;
     Cell inspectedCell{0, 0, 0, 0, 1, 1, 1, false};
     Cell* inspectedCellPtr;
@@ -70,10 +69,14 @@ public:
 
             cellIndex.push_back({x, y, 0, 0, p, n, e, true});
         }
+
+        UpdateInspectedCell(inspectedCell.X, inspectedCell.Y);
     }
 
     void FullResetGrid(){
         cellIndex.clear();
+
+        UpdateInspectedCell(inspectedCell.X, inspectedCell.Y);
     }
 
     void GridAddRemove(int rowY, int columnX, int value) {
@@ -131,6 +134,10 @@ public:
                     cellExists = false;
                 }
             }
+
+            if (cellExists == false) {
+                cout << "No atom found with given coordinates, cellExists = false." << "\n" << "\n";
+            }
         }
 
         if (mode == 1) {
@@ -149,6 +156,10 @@ public:
                 else {
                     cellExists = false;
                 }
+            }
+
+            if (cellExists == false) {
+                cout << "No atom found with given ID, cellExists = false." << "\n" << "\n";
             }
         }
     }

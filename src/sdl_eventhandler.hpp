@@ -86,8 +86,6 @@ public:
             SDL_GetMouseState(&mouseX, &mouseY);
 
             if (inBounds) {
-                grid->inspectorOpened = true;
-
                 int gridSquareX = (mouseX - windowBuffer)/(squareSize);
                 int gridSquareY = (mouseY - windowBuffer)/(squareSize);
 
@@ -108,38 +106,6 @@ public:
             }
             else if (grid->isSimulating == false) {
                 windowCond = 0;
-            }
-        }
-
-        // A -- Toggle Editing Mode for Velocity Factor X Component
-        if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_A) {
-            if(inBounds) {
-                if (isEditing == false) {
-                    isEditing = true;
-                    editingMode = "VelFactorX";
-                    cout << "editing vfx";
-                }
-                else if (isEditing == true) {
-                    isEditing = false;
-                    editingMode = "";
-                    cout << "not in editing mode";
-                }
-            }
-        }
-
-        // S -- Toggle Editing Mode for Velocity Factor Y Component
-        if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_S) {
-            if(inBounds) {
-                if (isEditing == false) {
-                    isEditing = true;
-                    editingMode = "VelFactorY";
-                    cout << "editing vfy";
-                }
-                else if (isEditing == true) {
-                    isEditing = false;
-                    editingMode = "";
-                    cout << "not in editing mode";
-                }
             }
         }
 
@@ -207,6 +173,8 @@ public:
 
         if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_UP) {
             cout << "increased";
+
+            grid->EditCell(editingMode, 1);
 
             grid->UpdateInspectedCell(grid->inspectedCell.cellID, 0, 1);
         }
