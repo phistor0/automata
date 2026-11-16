@@ -37,6 +37,10 @@ public:
         }
     }
 
+    void UpdateInspectedCellHandler(GridArray* grid) {
+        grid->UpdateInspectedCell(grid->inspectedCell.cellID, 0, 1);
+    }
+
     void HandleEvent(SDL_Event& E, GridArray* grid, int windowBuffer, int squareSize, int lineSize) {
         bool inBounds = MouseInBoudnds(grid, windowBuffer, squareSize);
         
@@ -52,6 +56,7 @@ public:
                 << "Corresponds to input for new atom to be created at (x, y): " << gridSquareX << ", " << gridSquareY << "\n" << "\n\n";
 
                 grid->GridAddRemove(gridSquareY, gridSquareX, 1);
+                grid->UpdateInspectedCell(gridSquareX, gridSquareY);
             }
         }
 
@@ -69,6 +74,7 @@ public:
                 << "Corresponds to input for grid to be cleared at (x, y): " << gridSquareX << ", " << gridSquareY << "\n" << "\n\n";
 
                 grid->GridAddRemove(gridSquareY, gridSquareX, 0);
+                grid->UpdateInspectedCell(gridSquareX, gridSquareY);
             }
         }
 
@@ -80,12 +86,14 @@ public:
             SDL_GetMouseState(&mouseX, &mouseY);
 
             if (inBounds) {
-                cout << "inspector opened" << "\n";
-
                 grid->inspectorOpened = true;
 
                 int gridSquareX = (mouseX - windowBuffer)/(squareSize);
                 int gridSquareY = (mouseY - windowBuffer)/(squareSize);
+
+                cout << "FROM INPUT STACK (CTRL/MOUSE HOVER CALL): " << "\n"
+                << "Input (right-click) registered (x, y): " << mouseX << "px., " << mouseY << "px." << "\n" 
+                << "Corresponds to input for cell to be inspected at (x, y): " << gridSquareX << ", " << gridSquareY << "\n" << "\n\n";
 
                 grid->UpdateInspectedCell(gridSquareX, gridSquareY);
             }
@@ -200,13 +208,15 @@ public:
         if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_UP) {
             cout << "increased";
 
-            grid->EditCell(editingMode, 1);
+            grid->UpdateInspectedCell(grid->inspectedCell.cellID, 0, 1);
         }
 
         if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_DOWN) {
             cout << "decreased";
 
             grid->EditCell(editingMode, -1);
+
+            grid->UpdateInspectedCell(grid->inspectedCell.cellID, 0, 1);
         }
     }
 };

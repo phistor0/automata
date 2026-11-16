@@ -112,25 +112,38 @@ public:
     }
 
     void UpdateInspectedCell(int xORcellID, int y, int mode = 0) {
-        for (int i = 0; i < cellIndex.size(); i++) {
-            if (mode == 0) {
+        cout << "FROM GRIDARRAY (UPDATEINSPECTEDCELL()): " << "\n";
+        
+        if (mode == 0) {
+            cout << "Using X/Y components to search for cell to be inspected: " << xORcellID << ", " << y << "\n";
+            for (int i = 0; i < cellIndex.size(); i++) {
                 if (cellIndex[i].X == xORcellID && cellIndex[i].Y == y) {
+                    cout << "Cell found." << "\n";
+
                     inspectedCellPtr = &cellIndex[i];
                     inspectedCell = *inspectedCellPtr;
-                    
                     cellExists = true;
+
+                    cout << "Cell updated." << "\n" << "\n";
                     break;
                 }
                 else {
                     cellExists = false;
                 }
             }
-            if (mode == 1) {
+        }
+
+        if (mode == 1) {
+            cout << "Using CellID to search for cell to be inspected: " << xORcellID << "\n";
+            for (int i = 0; i < cellIndex.size(); i++) {
                 if (cellIndex[i].cellID == xORcellID) {
+                    cout << "Cell found." << "\n";
+
                     inspectedCellPtr = &cellIndex[i];
                     inspectedCell = cellIndex[i];
-                    
                     cellExists = true;
+
+                    cout << "Cell updated." << "\n\n\n";
                     break;
                 }
                 else {
@@ -345,11 +358,11 @@ public:
                     << iterations << " iterations.\n";
             }
 
+
+            UpdateInspectedCell(inspectedCell.cellID, 0, 1);
+
             cout << "Updated all cells." << "\n\n";
         }
-        
-        int inspCellID = inspectedCell.cellID;
-        UpdateInspectedCell(inspCellID, 0, 1);
             
         // update arrayIndex with positions of all atoms
         for (int i = 0; i < cellIndex.size(); i++) {
