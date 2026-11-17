@@ -182,6 +182,23 @@ public:
         }
     }
 
+    void PrintCellInfo() {
+        cout << "LISTING CELLS (PRINTCELLINFO()): " << "\n";
+        if (static_cast<int>(cellIndex.size()) == 0) {
+            cout << "NO CELLS IN INDEX." << "\n" << "\n";
+        }
+
+        for (int i = 0; i < static_cast<int>(cellIndex.size()); i++) {
+            cout << "CellID: " << cellIndex[i].cellID << "\n" <<
+                "Cell Transform: " << cellIndex[i].X << ", " << cellIndex[i].Y << "\n" <<
+                "Cell P/N/E: " << cellIndex[i].P << ", " << cellIndex[i].N << ", " << cellIndex[i].E << "\n" <<
+                "Cell Mod: " << cellIndex[i].modX << ", " << cellIndex[i].modY << "\n" <<
+                "Cell Velocity: " << cellIndex[i].v << "\n" <<
+                "Cell Velocity Relativized: " << cellIndex[i].Relativize(cellIndex[i].v, cellIndex[i].modX, cellIndex[i].modY, 1) << ", " << cellIndex[i].Relativize(cellIndex[i].v, cellIndex[i].modX, cellIndex[i].modY, 1) <<
+                "\n" << "\n";
+        }
+    }
+
     bool HasOverlaps() {
         for (int a = 0; a < static_cast<int>(cellIndex.size()); a++) {
             for (int b = a + 1;
@@ -281,9 +298,13 @@ public:
     }
 
     void UpdateGrid() {
+        cout << "FROM UPDATEGRID(): " << "\n";
+
+        cout << "Clearing arrayIndex." << "\n";
         // reset arrayIndex
         arrayIndex.clear();
 
+        cout << "Pushing back a blank arrayIndex." << "\n";
         for (int y = 0; y < WidthY; y++) {
             vector<int> newRow = {};
 
@@ -298,11 +319,12 @@ public:
             // modify positions of all atoms
             cout << "Updating all cells: " << "\n";
 
-            // reset velocities
+            cout << "Reset all conditions for movement." << "\n";
             for (int a = 0; a < cellIndex.size(); a++) {
                 cellIndex[a].AtomVelReset();
             }
 
+            cout << "Calculating all atom interactions." << "\n";
             // calculate velocity of each cell based on neighbors
             for (int a = 0; a < cellIndex.size(); a++) {
                 for (int b = a + 1; b < cellIndex.size(); b++) {
@@ -311,6 +333,7 @@ public:
                 }
             }
             
+            cout << "Updating all positions of cells using relativize functions. " << "\n";
             // update positions of all cells
             for (int a = 0; a < cellIndex.size(); a++) {
                 cellIndex[a].Update(WidthX, WidthY);
@@ -322,6 +345,7 @@ public:
 
             bool failed = false;
 
+            cout << "Calculating for overlaps." << "\n";
             while (HasOverlaps() &&
                 iterations < maxIterations &&
                 !failed) {
@@ -369,8 +393,9 @@ public:
                     << iterations << " iterations.\n";
             }
 
-
             UpdateInspectedCell(inspectedCell.cellID, 0, 1);
+
+            PrintCellInfo();
 
             cout << "Updated all cells." << "\n\n";
         }

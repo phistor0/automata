@@ -43,7 +43,6 @@ int main(int, char**) {
         }
 
         // Update objects
-        Grid.UpdateGrid();
         isSimulating = Grid.isSimulating;
 
         Win.cellExists = Grid.cellExists;
@@ -60,6 +59,7 @@ int main(int, char**) {
             this_thread::sleep_for(std::chrono::seconds(1));
 
             cout << "simulating";
+            Grid.UpdateGrid();
         }
         
         // Updates the back buffer onto the screen

@@ -13,6 +13,8 @@ public:
     bool isEditing = false;
     int windowCond = 0;
 
+    bool debugInputsEnabled = true;
+
     float fillpercent = 0.16f;
 
     SDL_EventHandler() {
@@ -57,6 +59,7 @@ public:
 
                 grid->GridAddRemove(gridSquareY, gridSquareX, 1);
                 grid->UpdateInspectedCell(gridSquareX, gridSquareY);
+                grid->UpdateGrid();
             }
         }
 
@@ -75,6 +78,7 @@ public:
 
                 grid->GridAddRemove(gridSquareY, gridSquareX, 0);
                 grid->UpdateInspectedCell(gridSquareX, gridSquareY);
+                grid->UpdateGrid();
             }
         }
 
@@ -94,6 +98,7 @@ public:
                 << "Corresponds to input for cell to be inspected at (x, y): " << gridSquareX << ", " << gridSquareY << "\n" << "\n\n";
 
                 grid->UpdateInspectedCell(gridSquareX, gridSquareY);
+                grid->UpdateGrid();
             }
         }
 
@@ -107,6 +112,8 @@ public:
             else if (grid->isSimulating == false) {
                 windowCond = 0;
             }
+
+            grid->UpdateGrid();
         }
 
         // Q -- Toggle Editing Mode for Protons
@@ -164,19 +171,28 @@ public:
         }
 
         if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_R) {
-            grid->RandomizeGrid(0.0025f);
+            grid->RandomizeGrid(0.006f);
+            grid->UpdateGrid();
         }
 
         if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_C) {
             grid->FullResetGrid();
+            grid->UpdateGrid();
         }
 
+        if(debugInputsEnabled) {
+            if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_A) {
+                grid->PrintCellInfo();
+            }
+        }
+        
         if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_UP) {
             cout << "increased";
 
             grid->EditCell(editingMode, 1);
 
             grid->UpdateInspectedCell(grid->inspectedCell.cellID, 0, 1);
+            grid->UpdateGrid();
         }
 
         if (E.type == SDL_EVENT_KEY_DOWN && E.key.key == SDLK_DOWN) {
@@ -185,6 +201,7 @@ public:
             grid->EditCell(editingMode, -1);
 
             grid->UpdateInspectedCell(grid->inspectedCell.cellID, 0, 1);
+            grid->UpdateGrid();
         }
     }
 };

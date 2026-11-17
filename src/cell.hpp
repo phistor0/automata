@@ -160,6 +160,5 @@ public:
 
         c = P - E;
 
-        cout << "updating: " << cellID << ", MOD: " << modX << ", " << modY << ", VELOCITY: " << Relativize(v, modX, modY, 1) << ", " << Relativize(v, modY, modX, 2) << ", " << vE << ", VF: " << v << ", Pos: " << x << ", " << y << "charge:" << c <<"\n\n";
     }
 };
