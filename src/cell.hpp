@@ -86,11 +86,11 @@ public:
         s = P + N + iAtom.P + iAtom.N;
 
         if (iAtom.X - X != 0) {
-            modX += 1.0f/(iAtom.X - X);
+            modX += 1.0f/(iAtom.x - x);
         }
         
         if (iAtom.Y - Y != 0){
-            modY += 1.0f/(iAtom.Y - Y);
+            modY += 1.0f/(iAtom.y - y);
         }
 
         // X
