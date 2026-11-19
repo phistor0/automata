@@ -48,7 +48,7 @@ protected:
         TTF_Font* LoadedFont{TTF_OpenFont("Arimo-VariableFont_wght.ttf", FontSize)};
 
         if (!LoadedFont) {
-            std::cout << "Error loading font: " << SDL_GetError() << '\n';
+            std::cout << "Error loading font: " << SDL_GetError() << std::endl;
         }
 
         return LoadedFont;
@@ -59,7 +59,7 @@ protected:
 
         TextSurface = TTF_RenderText_Blended(Font, Content.c_str(), 0, color);
         if (!TextSurface) {
-            std::cout << "Error creating TextSurface: " << SDL_GetError() << '\n';
+            std::cout << "Error creating TextSurface: " << SDL_GetError() << std::endl;
         }
     }
 

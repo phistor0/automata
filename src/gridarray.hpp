@@ -80,7 +80,7 @@ public:
     }
 
     void GridAddRemove(int rowY, int columnX, int value) {
-        cout << "FROM GRIDARRAY (GRIDADDREMOVE()): " << "\n";
+        cout << "FROM GRIDARRAY (GRIDADDREMOVE()): " << std::endl;
 
         if (value == 0 && arrayIndex[rowY][columnX] == 1) {
             for (int i = 0; i < cellIndex.size(); i++) {
@@ -90,24 +90,24 @@ public:
                 }
             }
 
-            cout << "Grid cleared at (x, y): " << columnX << ", " << rowY << "\n";
+            cout << "Grid cleared at (x, y): " << columnX << ", " << rowY << std::endl;
         }
 
         else if (value == 1 && arrayIndex[rowY][columnX] == 0) {            
             cellIndex.push_back(Cell{columnX, rowY, 0, 0, 1, 1, 1});
 
-            cout << "Cell added at (x, y): " << columnX << ", " << rowY << "\n";
+            cout << "Cell added at (x, y): " << columnX << ", " << rowY << std::endl;
         }
 
         else {
-            cout << "Redundancy in GridAddRemove() function call. No actions taken. " << "\n";
+            cout << "Redundancy in GridAddRemove() function call. No actions taken. " << std::endl;
         }
 
-        cout << "New count of cells in CellIndex: " << cellIndex.size() << "\n";
+        cout << "New count of cells in CellIndex: " << cellIndex.size() << std::endl;
 
         arrayIndex[rowY][columnX] = value;
 
-        cout << "ArrayIndex has been updated." << "\n" << "\n" << "\n";
+        cout << "ArrayIndex has been updated." << std::endl << std::endl << std::endl;
     }
 
     int RetrieveValue(int rowY, int columnX) {
@@ -115,19 +115,19 @@ public:
     }
 
     void UpdateInspectedCell(int xORcellID, int y, int mode = 0) {
-        cout << "FROM GRIDARRAY (UPDATEINSPECTEDCELL()): " << "\n";
+        cout << "FROM GRIDARRAY (UPDATEINSPECTEDCELL()): " << std::endl;
         
         if (mode == 0) {
-            cout << "Using X/Y components to search for cell to be inspected: " << xORcellID << ", " << y << "\n";
+            cout << "Using X/Y components to search for cell to be inspected: " << xORcellID << ", " << y << std::endl;
             for (int i = 0; i < cellIndex.size(); i++) {
                 if (cellIndex[i].X == xORcellID && cellIndex[i].Y == y) {
-                    cout << "Cell found." << "\n";
+                    cout << "Cell found." << std::endl;
 
                     inspectedCellPtr = &cellIndex[i];
                     inspectedCell = *inspectedCellPtr;
                     cellExists = true;
 
-                    cout << "Cell updated." << "\n" << "\n";
+                    cout << "Cell updated." << std::endl << std::endl;
                     break;
                 }
                 else {
@@ -136,21 +136,21 @@ public:
             }
 
             if (cellExists == false) {
-                cout << "No atom found with given coordinates, cellExists = false." << "\n" << "\n";
+                cout << "No atom found with given coordinates, cellExists = false." << std::endl << std::endl;
             }
         }
 
         if (mode == 1) {
-            cout << "Using CellID to search for cell to be inspected: " << xORcellID << "\n";
+            cout << "Using CellID to search for cell to be inspected: " << xORcellID << std::endl;
             for (int i = 0; i < cellIndex.size(); i++) {
                 if (cellIndex[i].cellID == xORcellID) {
-                    cout << "Cell found." << "\n";
+                    cout << "Cell found." << std::endl;
 
                     inspectedCellPtr = &cellIndex[i];
                     inspectedCell = cellIndex[i];
                     cellExists = true;
 
-                    cout << "Cell updated." << "\n\n\n";
+                    cout << "Cell updated." << std::endl << std::endl;
                     break;
                 }
                 else {
@@ -159,7 +159,7 @@ public:
             }
 
             if (cellExists == false) {
-                cout << "No atom found with given ID, cellExists = false." << "\n" << "\n";
+                cout << "No atom found with given ID, cellExists = false." << std::endl << std::endl;
             }
         }
     }
@@ -183,19 +183,19 @@ public:
     }
 
     void PrintCellInfo() {
-        cout << "LISTING CELLS (PRINTCELLINFO()): " << "\n";
+        cout << "LISTING CELLS (PRINTCELLINFO()): " << std::endl;
         if (static_cast<int>(cellIndex.size()) == 0) {
-            cout << "NO CELLS IN INDEX." << "\n" << "\n";
+            cout << "NO CELLS IN INDEX." << std::endl << std::endl;
         }
 
         for (int i = 0; i < static_cast<int>(cellIndex.size()); i++) {
-            cout << "CellID: " << cellIndex[i].cellID << "\n" <<
-                "Cell Transform: " << cellIndex[i].X << ", " << cellIndex[i].Y << "\n" <<
-                "Cell P/N/E: " << cellIndex[i].P << ", " << cellIndex[i].N << ", " << cellIndex[i].E << "\n" <<
-                "Cell Mod: " << cellIndex[i].modX << ", " << cellIndex[i].modY << "\n" <<
-                "Cell Velocity: " << cellIndex[i].v << "\n" <<
+            cout << "CellID: " << cellIndex[i].cellID << std::endl <<
+                "Cell Transform: " << cellIndex[i].X << ", " << cellIndex[i].Y << std::endl <<
+                "Cell P/N/E: " << cellIndex[i].P << ", " << cellIndex[i].N << ", " << cellIndex[i].E << std::endl <<
+                "Cell Mod: " << cellIndex[i].modX << ", " << cellIndex[i].modY << std::endl <<
+                "Cell Velocity: " << cellIndex[i].v << std::endl <<
                 "Cell Velocity Relativized: " << cellIndex[i].Relativize(cellIndex[i].v, cellIndex[i].modX, cellIndex[i].modY, 1) << ", " << cellIndex[i].Relativize(cellIndex[i].v, cellIndex[i].modX, cellIndex[i].modY, 1) <<
-                "\n" << "\n";
+                std::endl << std::endl;
         }
     }
 
@@ -298,13 +298,13 @@ public:
     }
 
     void UpdateGrid() {
-        cout << "FROM UPDATEGRID(): " << "\n";
+        cout << "FROM GRIDARRAY (UPDATEGRID()): " << std::endl;
 
-        cout << "Clearing arrayIndex." << "\n";
+        cout << "Clearing arrayIndex." << std::endl;
         // reset arrayIndex
         arrayIndex.clear();
 
-        cout << "Pushing back a blank arrayIndex." << "\n";
+        cout << "Pushing back a blank arrayIndex." << std::endl << std::endl;
         for (int y = 0; y < WidthY; y++) {
             vector<int> newRow = {};
 
@@ -317,14 +317,14 @@ public:
 
         if (isSimulating) {
             // modify positions of all atoms
-            cout << "Updating all cells: " << "\n";
+            cout << "Updating all cells: " << std::endl;
 
-            cout << "Reset all conditions for movement." << "\n";
+            cout << "Reset all conditions for movement." << std::endl;
             for (int a = 0; a < cellIndex.size(); a++) {
                 cellIndex[a].AtomVelReset();
             }
 
-            cout << "Calculating all atom interactions." << "\n";
+            cout << "Calculating all atom interactions." << std::endl;
             // calculate velocity of each cell based on neighbors
             for (int a = 0; a < cellIndex.size(); a++) {
                 for (int b = a + 1; b < cellIndex.size(); b++) {
@@ -333,7 +333,7 @@ public:
                 }
             }
             
-            cout << "Updating all positions of cells using relativize functions. " << "\n";
+            cout << "Updating all positions of cells using relativize functions. " << std::endl;
             // update positions of all cells
             for (int a = 0; a < cellIndex.size(); a++) {
                 cellIndex[a].Update(WidthX, WidthY);
@@ -345,7 +345,7 @@ public:
 
             bool failed = false;
 
-            cout << "Calculating for overlaps." << "\n";
+            cout << "Calculating for overlaps." << std::endl;
             while (HasOverlaps() &&
                 iterations < maxIterations &&
                 !failed) {
@@ -373,7 +373,7 @@ public:
                         }
                         else {
                             cout << "Collision resolution failed: "
-                                << "no free grid square exists.\n";
+                                << "no free grid square exists." << std::endl;
                             failed = true;
                             break;
                         }
@@ -381,7 +381,7 @@ public:
                 }
 
                 if (!changed && HasOverlaps()) {
-                    cout << "Collision resolution stalled.\n";
+                    cout << "Collision resolution stalled." << std::endl;
                     break;
                 }
 
@@ -390,14 +390,16 @@ public:
 
             if (HasOverlaps()) {
                 cout << "WARNING: Overlaps remain after "
-                    << iterations << " iterations.\n";
+                    << iterations << " iterations." << std::endl;
             }
 
             UpdateInspectedCell(inspectedCell.cellID, 0, 1);
 
             PrintCellInfo();
 
-            cout << "Updated all cells." << "\n\n";
+            cout << "Updated all cells." << std::endl << std::endl << std::endl;
+            cout << std::endl;
+            cout << std::endl;
         }
             
         // update arrayIndex with positions of all atoms

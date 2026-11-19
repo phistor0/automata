@@ -53,9 +53,9 @@ public:
                 int gridSquareX = (E.button.x - windowBuffer)/(squareSize);
                 int gridSquareY = (E.button.y - windowBuffer)/(squareSize);
  
-                cout << "FROM INPUT STACK (LEFT-CLICK CALL): " << "\n"
-                << "Input (left-click) registered (x, y): " << E.button.x << "px., " << E.button.y << "px." << "\n" 
-                << "Corresponds to input for new atom to be created at (x, y): " << gridSquareX << ", " << gridSquareY << "\n" << "\n\n";
+                cout << "FROM INPUT STACK (LEFT-CLICK CALL): " << std::endl
+                << "Input (left-click) registered (x, y): " << E.button.x << "px., " << E.button.y << "px." << std::endl 
+                << "Corresponds to input for new atom to be created at (x, y): " << gridSquareX << ", " << gridSquareY << std::endl << std::endl;
 
                 grid->GridAddRemove(gridSquareY, gridSquareX, 1);
                 grid->UpdateInspectedCell(gridSquareX, gridSquareY);
@@ -72,9 +72,9 @@ public:
                 int gridSquareX = (E.button.x - windowBuffer)/(squareSize);
                 int gridSquareY = (E.button.y - windowBuffer)/(squareSize);
 
-                cout << "FROM INPUT STACK (RIGHT CLICK CALL): " << "\n"
-                << "Input (right-click) registered (x, y): " << E.button.x << "px., " << E.button.y << "px." << "\n" 
-                << "Corresponds to input for grid to be cleared at (x, y): " << gridSquareX << ", " << gridSquareY << "\n" << "\n\n";
+                cout << "FROM INPUT STACK (RIGHT CLICK CALL): " << std::endl
+                << "Input (right-click) registered (x, y): " << E.button.x << "px., " << E.button.y << "px." << std::endl 
+                << "Corresponds to input for grid to be cleared at (x, y): " << gridSquareX << ", " << gridSquareY << std::endl << std::endl;
 
                 grid->GridAddRemove(gridSquareY, gridSquareX, 0);
                 grid->UpdateInspectedCell(gridSquareX, gridSquareY);
@@ -93,9 +93,9 @@ public:
                 int gridSquareX = (mouseX - windowBuffer)/(squareSize);
                 int gridSquareY = (mouseY - windowBuffer)/(squareSize);
 
-                cout << "FROM INPUT STACK (CTRL/MOUSE HOVER CALL): " << "\n"
-                << "Input (right-click) registered (x, y): " << mouseX << "px., " << mouseY << "px." << "\n" 
-                << "Corresponds to input for cell to be inspected at (x, y): " << gridSquareX << ", " << gridSquareY << "\n" << "\n\n";
+                cout << "FROM INPUT STACK (CTRL/MOUSE HOVER CALL): " << std::endl
+                << "Input (right-click) registered (x, y): " << mouseX << "px., " << mouseY << "px." << std::endl 
+                << "Corresponds to input for cell to be inspected at (x, y): " << gridSquareX << ", " << gridSquareY << std::endl << std::endl;
 
                 grid->UpdateInspectedCell(gridSquareX, gridSquareY);
                 grid->UpdateGrid();
