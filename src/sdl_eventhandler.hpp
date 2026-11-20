@@ -111,9 +111,8 @@ public:
             }
             else if (grid->isSimulating == false) {
                 windowCond = 0;
+                grid->UpdateGrid();
             }
-
-            grid->UpdateGrid();
         }
 
         // Q -- Toggle Editing Mode for Protons
